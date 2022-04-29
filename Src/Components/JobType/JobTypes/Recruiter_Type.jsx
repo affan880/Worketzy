@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import Colors from "../../../utils/Colors";
 
 function Recruiter_Type() {
   return (
@@ -35,9 +36,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "30%",
     height: "20%",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: Colors.primary,
     borderRadius: 10,
-    borderColor: "#6369D1",
+    borderColor: Colors.secondary,
   },
   IconStyles: {
     width: "70%",
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500",
     letterSpacing: 1,
-    color: "#2A2A2E",
+    color: Colors.black,
   },
   FindJobContext: {
     fontStyle: "normal",
@@ -66,6 +67,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     letterSpacing: 1,
-    color: "#ACACAF",
+    color: Colors.lightGrey,
   },
 });

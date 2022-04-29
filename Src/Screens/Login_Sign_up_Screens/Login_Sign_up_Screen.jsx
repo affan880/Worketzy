@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import JobSeekerType from '../../Components/JobType/Job_Type_Selector'
+import Colors from '../../utils/Colors';
 
 export default Login_Sign_up_Screen = () => {
   return (
@@ -25,7 +26,7 @@ const Type = StyleSheet.create({
     top: "10%",
     height: "30%",
     alignItems: "center",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: Colors.primary,
   },
   JobTypeSelector: {
     fontStyle: "normal",
@@ -34,7 +35,7 @@ const Type = StyleSheet.create({
     lineHeight: 45,
     textAlign: "center",
     letterSpacing: 1,
-    color: "#2A2A2E",
+    color: Colors.black,
   },
   JobTypeSelectorDetails: {
     fontStyle: "normal",
@@ -43,7 +44,7 @@ const Type = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     letterSpacing: 1,
-    color: "#ACACAF",
+    color: Colors.lightGrey,
     paddingHorizontal: "5%",
     paddingVertical:'3%'
   },

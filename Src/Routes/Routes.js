@@ -1,23 +1,39 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { auth } from "../Components/firebase/firebase";
 import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login_Sign_up_Screen from "../Screens/Login_Sign_up_Screens/Login_Sign_up_Screen";
-import Login_Jseeker from "../Screens/Login_Sign_up_Screens/Login_Jseeker/Login_Jseeker";
-import Login_Recruiter from '../Screens/Login_Sign_up_Screens/Login_Recruiter/Login_Recruiter'
+import AppStack from "./appStack";
+import AuthStack from "./authStack";
+import { AuthUserContext } from "./authUserProvider";
+
 const Stack = createNativeStackNavigator();
 
 
 export default function JobTypeSelectorRoute() {
+  const { user, setUser } = useContext(AuthUserContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      // onAuthStateChanged returns an unSubscriber
+      const unsubscribeAuth = auth.onAuthStateChanged(async (authUser) => {
+        try {
+          await (authUser ? setUser(authUser) : setUser(null));
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      // unsubscribe auth listener on unmount
+      return unsubscribeAuth;
+    }, []);
+
+    if (isLoading) {
+      // return <Spinner />;
+    }
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen name="Welcome" component={Login_Sign_up_Screen} />
-        <Stack.Screen name="Login_Jseeker" component={Login_Jseeker} />
-        <Stack.Screen name="Login_Recruiter" component={Login_Recruiter} />
-      </Stack.Navigator>
+      {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

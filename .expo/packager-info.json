@@ -1,0 +1,10 @@
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://fs-mzw.anonymous.worketzy.exp.direct",
+  "packagerNgrokUrl": "https://fs-mzw.anonymous.worketzy.exp.direct",
+  "ngrokPid": 21644,
+  "packagerPid": null,
+  "webpackServerPort": null
+}
