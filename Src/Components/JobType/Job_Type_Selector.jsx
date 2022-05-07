@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import Seeker_Type from './JobTypes/Seeker_Type';
-import Recruiter_Type from './JobTypes/Recruiter_Type';
+import JobTypes from './Job_Types';
 import React from 'react';
+import Colors from '../../utils/Colors';
 const JobSeekerType = () => {
   const navigation = useNavigation();
   var [isPress, setIsPress] = React.useState(true);
@@ -15,15 +15,28 @@ const JobSeekerType = () => {
     style: isPress ? styles.SelectorOption : styles.SelectorOptionOnClick ,
     onPress: () => isPress ? setIsPress(false) : null,
   };
-
+   const JobTypeICons = {
+     FindJob: require("../../../assets/FindJob.png"),
+     FindEmployee: require("../../../assets/FindEmployee.png"),
+   };
   return (
     <View style={styles.Container}>
       <View style={styles.Types}>
         <TouchableOpacity {...onTouchJob}>
-          <Seeker_Type />
+          <JobTypes
+            TextColor={isPress ? Colors.primary : Colors.secondary}
+            JobType="Find Job"
+            JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            image={JobTypeICons.FindJob}
+          />
         </TouchableOpacity>
         <TouchableOpacity {...onTouchRec}>
-          <Recruiter_Type />
+          <JobTypes
+            TextColor={isPress ? Colors.black : Colors.primary}
+            JobType="Find Employee"
+            JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            image={JobTypeICons.FindEmployee}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.BtnContainer}>
@@ -31,8 +44,8 @@ const JobSeekerType = () => {
           style={styles.ConfirmBtn}
           onPress={() => {
             isPress
-              ? navigation.navigate("Login_Jseeker")
-              : navigation.navigate("Login_Recruiter");
+              ? navigation.navigate("Find Job")
+              : navigation.navigate("Find Empolyee");
           }}
         >
           <Text style={styles.BtnTextStyle}>Confirm</Text>
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "55%",
     paddingHorizontal:"5%",
-    marginTop:'8%',
+    marginTop:'10%',
     alignItems: "center",
     justifyContent: "center",
   },
@@ -61,24 +74,25 @@ const styles = StyleSheet.create({
     margin: "1.5%",
     width: "50%",
     height: "90%",
-    backgroundColor: "#F6F6F6",
+    color: Colors.black ,
+    backgroundColor: Colors.primary,
     borderWidth: 2,
-    borderColor: "#EAEBEC",
+    borderColor: Colors.RichBlack,
     borderRadius: 18,
   },
   SelectorOptionOnClick: {
     width: "50%",
     height: "90%",
-    backgroundColor: "#EBECFC",
+    backgroundColor: Colors.secondaryShade,
     borderWidth: 2,
-    borderColor: "#6369D1",
+    borderColor: Colors.RichBlack,
     borderRadius: 18,
     margin: "1.5%",
   },
   BtnContainer: {
     width: "100%",
     height: "15%",
-    top:"25%",
+    top:"20%",
     alignItems: "center",
   },
   ConfirmBtn: {
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
     margin: "1.5%",
     height: 50,
     elevation: 8,
-    backgroundColor: "#6369D1",
+    backgroundColor: Colors.secondary,
     borderRadius: 24,
     justifyContent:'center'
   },

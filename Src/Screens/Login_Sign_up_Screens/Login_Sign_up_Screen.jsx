@@ -19,6 +19,7 @@ export default Login_Sign_up_Screen = () => {
 };
 const Type = StyleSheet.create({
   Container: {
+    backgroundColor:Colors.primary,
     flex: 1,
   },
   jobType: {
@@ -44,9 +45,9 @@ const Type = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     letterSpacing: 1,
-    color: Colors.lightGrey,
+    color: Colors.secondary,
     paddingHorizontal: "5%",
-    paddingVertical:'3%'
+    paddingVertical:'7%'
   },
 });
 
