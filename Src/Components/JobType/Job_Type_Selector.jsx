@@ -24,7 +24,7 @@ const JobSeekerType = () => {
       <View style={styles.Types}>
         <TouchableOpacity {...onTouchJob}>
           <JobTypes
-            TextColor={isPress ? Colors.primary : Colors.secondary}
+            TextColor={isPress ? Colors.mediumGrey : Colors.mediumGrey}
             JobType="Find Job"
             JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             image={JobTypeICons.FindJob}
@@ -32,7 +32,7 @@ const JobSeekerType = () => {
         </TouchableOpacity>
         <TouchableOpacity {...onTouchRec}>
           <JobTypes
-            TextColor={isPress ? Colors.black : Colors.primary}
+            TextColor={isPress ? Colors.mediumGrey : Colors.mediumGrey}
             JobType="Find Employee"
             JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             image={JobTypeICons.FindEmployee}
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "55%",
     paddingHorizontal:"5%",
-    marginTop:'10%',
+    marginTop:'15%',
     alignItems: "center",
     justifyContent: "center",
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     color: Colors.black ,
     backgroundColor: Colors.primary,
     borderWidth: 2,
-    borderColor: Colors.RichBlack,
+    borderColor: Colors.mediumGrey,
     borderRadius: 18,
   },
   SelectorOptionOnClick: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     height: "90%",
     backgroundColor: Colors.secondaryShade,
     borderWidth: 2,
-    borderColor: Colors.RichBlack,
+    borderColor: Colors.secondary,
     borderRadius: 18,
     margin: "1.5%",
   },

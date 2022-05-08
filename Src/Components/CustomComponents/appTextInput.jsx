@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import Colors from "../utils/Colors";
+import Colors from "../../utils/Colors";
 
 export default function AppTextInput({
   leftIcon,
@@ -41,7 +41,7 @@ export default function AppTextInput({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.lightGrey,
+    backgroundColor: Colors.white,
     borderRadius: 10,
     flexDirection: "row",
     padding: 15,
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   input: {
-    width: "100%",
+    width: "80%",
     fontSize: 15,
-    color: Colors.black,
+    color: Colors.mediumGrey,
   },
   rightIconStyles: {
     position: "absolute",

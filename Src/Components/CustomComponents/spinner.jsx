@@ -1,7 +1,6 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import Colors from "../utils/Colors";
-
+import Colors from "../../utils/Colors";
 export default function Spinner() {
   return (
     <View style={styles.container}>

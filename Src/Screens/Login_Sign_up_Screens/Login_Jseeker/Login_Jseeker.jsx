@@ -7,8 +7,8 @@ import Form from '../../../Components/forms/form';
 import FormErrorMessage from '../../../Components/forms/formErrorMessage';
 import FormButton from '../../../Components/forms/formButton';
 import FormField from '../../../Components/forms/formField';
-import SafeView from '../../../Components/safeView'; 
-import Spinner from '../../../Components/spinner';
+import SafeView from '../../../Components/CustomComponents/safeView'
+import Spinner from '../../../Components/CustomComponents/spinner';
 import Colors from '../../../utils/Colors'
 import { validationSchemaPhone, validationSchemaCode } from '../../../Validation/InputValidation';
 

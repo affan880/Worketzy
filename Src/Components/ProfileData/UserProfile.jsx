@@ -15,7 +15,7 @@ export default function UserProfile({addImage, image}) {
     <View style={{justifyContent:'center',alignItems:'center'}} >
       <View style={imageUploaderStyles.container}>
         {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+          <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />
         )}
 
         <View style={imageUploaderStyles.uploadBtnContainer}>
@@ -24,12 +24,12 @@ export default function UserProfile({addImage, image}) {
             style={imageUploaderStyles.uploadBtn}
           >
             <Text>{image ? "Edit" : "Upload"} Image</Text>
-            <AntDesign name="camera" size={20} color="black" />
+            <AntDesign name="camera" size={15} color="black" />
           </TouchableOpacity>
         </View>
       </View>
       <View style={imageUploaderStyles.userName}>
-        <Text style={{ marginVertical: 20, fontSize: 16 }}>
+        <Text style={{ marginVertical: 20, fontSize: 14, color: Colors.black }}>
           Welcome, FuzzySid
         </Text>
       </View>
@@ -40,11 +40,11 @@ export default function UserProfile({addImage, image}) {
 const imageUploaderStyles = StyleSheet.create({
   container: {
     elevation: 3,
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
     backgroundColor: "#efefef",
     justifyContent:'center',
-    borderRadius: 999,
+    borderRadius: 99,
     overflow: "hidden",
   },
   userName: {
@@ -59,7 +59,7 @@ const imageUploaderStyles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "lightgrey",
     width: "100%",
-    height: "25%",
+    height: "35%",
   },
   uploadBtn: {
     display: "flex",

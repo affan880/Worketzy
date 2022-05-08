@@ -12,5 +12,6 @@ export const validationSchemaCode = Yup.object().shape({
 
 export const validationSchemaUserDetails = Yup.object().shape({
   ValidFirstName: Yup.string().trim().min(3, 'First name is too short').required('name is required'),
-  ValidLastName: Yup.string().trim().min(3, 'Last name is too short').required('name is required')
-})
+  ValidLastName: Yup.string().trim().min(3, 'Last name is too short').required('name is required'),
+  ValidEmail: Yup.string().email('Enter valid Email').required('email is required')
+});

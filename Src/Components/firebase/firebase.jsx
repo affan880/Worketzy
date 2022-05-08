@@ -82,13 +82,14 @@ export const getVerificationId = async ({
 
 export const Firestore = firebase.firestore();
 
-export const createUserDocument = async (ValidFirstName, ValidLastName) => {
+export const createUserDocument = async (ValidFirstName, ValidLastName, ValidEmail) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
   if (!user) return;
    const userdetails = {
      firsttName: ValidFirstName,
      lastName: ValidLastName,
+     Email: ValidEmail,
      createdAt: new Date(),
    };
   const userRef = Firestore.collection("users").doc(uid);
@@ -104,7 +105,7 @@ export const createUserDocument = async (ValidFirstName, ValidLastName) => {
   }
 };
 
-export const uploadImage = async (image, name, setImageUpload) => {
+export const uploadImage = async (image, name, setImageUpload, setLoading) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
   const blob = await new Promise((resolve, reject) => {
@@ -126,15 +127,15 @@ export const uploadImage = async (image, name, setImageUpload) => {
   snapshot.on(
     firebase.storage.TaskEvent.STATE_CHANGED,
     () => {
-      console.log("loading");
+      setLoading(true)
     },
     (error) => {
       console.log(error);
     },
     () => {
       snapshot.snapshot.ref.getDownloadURL().then((url) => {
-        setImageUpload(true)
-        console.log("download uri : ", url);
+        setImageUpload(true);
+        // console.log("download uri : ", url);
         blob.close();
         return url;
       });
