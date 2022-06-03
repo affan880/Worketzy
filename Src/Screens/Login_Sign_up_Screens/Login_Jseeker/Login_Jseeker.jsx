@@ -91,13 +91,14 @@ export default function LoginScreen({ navigation }) {
         >
           <FormField
             name="phoneNumber"
+            Name="Send Code"
             leftIcon="phone"
             placeholder="Enter phone number"
             autoCapitalize="none"
             keyboardType="phone-pad"
             autoFocus={true}
           />
-          <FormButton title={"send code"} />
+          <FormButton title={"send code"} color={Colors.secondary} />
           {<FormErrorMessage error={codeError} visible={true} />}
         </Form>
       )}
@@ -112,6 +113,7 @@ export default function LoginScreen({ navigation }) {
             placeholder="Enter code"
             autoCapitalize="none"
             keyboardType="phone-pad"
+            Name="Verification Code"
             autoFocus={true}
           />
           <View style={styles.flexRow}>

@@ -4,9 +4,9 @@ import JobSeekerDetails from "../Screens/Job_Seeker_Details/JobSeekerDetails";
 import Profile from "../Screens/Profile/profile";
 const Stack = createNativeStackNavigator();
 
-export default function AppStack() {
+export default function AppStack({navigateTo}) {
   return (
-    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }} initialRouteName={navigateTo} >
     <Stack.Screen name="Details" component={JobSeekerDetails} />
     <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>

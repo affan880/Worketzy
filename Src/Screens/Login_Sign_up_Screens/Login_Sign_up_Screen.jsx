@@ -59,7 +59,7 @@ const Type = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     letterSpacing: 1,
-    color: Colors.mediumGrey,
+    color: Colors.black,
     paddingHorizontal: "5%",
     paddingVertical:'6%'
   },

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: "50%",
     height: "90%",
     color: Colors.black ,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.white,
     borderWidth: 2,
     borderColor: Colors.mediumGrey,
     borderRadius: 18,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   SelectorOptionOnClick: {
     width: "50%",
     height: "90%",
-    backgroundColor: Colors.secondaryShade,
+    backgroundColor: Colors.secondary,
     borderWidth: 2,
     borderColor: Colors.secondary,
     borderRadius: 18,

@@ -1,5 +1,5 @@
 import * as firebase from "firebase";
-import * as firestore from 'firebase/firestore'
+import * as firestore from 'firebase/firestore';
 import "firebase/auth";
 import firebaseConfig from "./firebaseConfig";
 import { Platform, InteractionManager } from "react-native";
@@ -80,22 +80,37 @@ export const getVerificationId = async ({
   return verificationId;
 };
 
+
+
 export const Firestore = firebase.firestore();
 
-export const createUserDocument = async (ValidFirstName, ValidLastName, ValidEmail) => {
+export const createUserDocument = async (
+  ValidFirstName,
+  ValidLastName,
+  ValidEmail,
+  Bio,
+  student,
+  UniversityName,
+  checked
+) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
   if (!user) return;
-   const userdetails = {
-     firsttName: ValidFirstName,
-     lastName: ValidLastName,
-     Email: ValidEmail,
-     createdAt: new Date(),
-   };
+  const userdetails = {
+    firstName: ValidFirstName,
+    lastName: ValidLastName,
+    Email: ValidEmail,
+    Bio: Bio,
+    Student: student,
+    UniversityName: UniversityName,
+    EmployeeStatus: checked,
+    createdAt: new Date(),
+  };
   const userRef = Firestore.collection("users").doc(uid);
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
-    userRef.set(userdetails)
+    userRef
+      .set(userdetails)
       .then(function () {
         console.log("Value successfully written!");
       })

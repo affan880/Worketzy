@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import firebase from "firebase";
 import { auth } from "../Components/firebase/firebase";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,7 +15,6 @@ export default function JobTypeSelectorRoute() {
   const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // onAuthStateChanged returns an unSubscriber
       const unsubscribeAuth = auth.onAuthStateChanged(async (authUser) => {
         try {
           await (authUser ? setUser(authUser) : setUser(null));
@@ -23,14 +23,8 @@ export default function JobTypeSelectorRoute() {
           console.log(error);
         }
       });
-
-      // unsubscribe auth listener on unmount
       return unsubscribeAuth;
     }, []);
-
-    if (isLoading) {
-      // return <Spinner />;
-    }
   return (
     <NavigationContainer>
       {user ? <AppStack /> : <AuthStack />}
