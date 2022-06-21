@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
+    
   },
   buttonText: {
     color: Colors.primary,

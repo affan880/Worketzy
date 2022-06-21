@@ -1,20 +1,15 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Profile from "../Screens/Profile/profile";
-import BottomTabs from "./BottomTabs";
+import JobSeekerDetails from "../Screens/Job_Seeker_Details/JobSeekerDetails";
 const Stack = createNativeStackNavigator();
 
-
-export default function AppStack() {
+export default function FormStack({ navigateTo }) {
   return (
     <Stack.Navigator
       screenOptions={{ headerTitleAlign: "center" }}
+      initialRouteName={navigateTo}
     >
-      <Stack.Screen
-        name="Worketzy"
-        component={BottomTabs}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Details" component={JobSeekerDetails} />
     </Stack.Navigator>
   );
 }

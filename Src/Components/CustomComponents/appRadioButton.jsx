@@ -3,15 +3,16 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { RadioButton} from "react-native-paper";
 import Colors from "../../utils/Colors";
 //{ radioButtonsData, radioButtonState, setRadioButtonState}
-const AppRadioButton = ({value,setValue, radioButtonsData}) => {
+const AppRadioButton = ({value,setValue, radioButtonsData,width, Name}) => {
     return (
-      <View style={Styles.RadioButtonContainer}>
+      <View style={[Styles.RadioButtonContainer,{width:width}]}>
         <Text style={{ fontSize: 16, marginVertical: 15,marginLeft:15 }}>
-          Are you a Current or Former Employee ?
+          {Name}
         </Text>
         <RadioButton.Group
           onValueChange={(newValue) => setValue(newValue)}
           value={value}
+          
         >
           <View style={[{ flexDirection: "row" }, Styles.container]}>
             {radioButtonsData.map((items) => (
@@ -40,6 +41,7 @@ const Styles = StyleSheet.create({
     display: "flex",
     marginVertical: 4,
     paddingHorizontal: 10,
+    width: "100%",
   },
   RadioButtonContainer: {
     backgroundColor: Colors.white,
@@ -50,7 +52,7 @@ const Styles = StyleSheet.create({
   label: {
     fontSize: 15,
     color: Colors.secondary,
-    marginRight: "70%",
+    paddingLeft: 10,
   },
   radioButton: {
     fontSize: 15,

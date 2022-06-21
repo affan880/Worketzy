@@ -5,11 +5,14 @@ import UserProfile from '../ProfileData/UserProfile';
 import FormField from '../forms/formField';
 import FormButton from '../forms/formButton';
 import { Feather } from "@expo/vector-icons";
-const FirstPage = ({ addImage,
-    image, }) => {
+import {setuserDetails} from '../../redux/reducers/userDetails'
+import { useSelector, useDispatch } from "react-redux";
+
+const FirstPage = ({ addImage, image, }) => {
+    const dispatch = useDispatch();
   return (
     <View style={styles.FormContainer}>
-      <UserProfile addImage={addImage} image={image} />
+      <UserProfile addImage={addImage} />
       <FormField
         name="ValidFirstName"
         Name="First Name"
@@ -43,7 +46,7 @@ const FirstPage = ({ addImage,
       />
       <View>
         <FormButton
-          title={ 
+          title={
             <View
               style={{
                 flexDirection: "row",

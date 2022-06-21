@@ -1,16 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import FormButton from '../forms/formButton';
 import Colors from '../../utils/Colors';
 import { Feather } from "@expo/vector-icons";
 import AppToggleBtn from '../CustomComponents/appToggleBtn';
 import FormField from '../forms/formField';
 import AppRadioButton from '../CustomComponents/appRadioButton';
+import { useSelector, useDispatch } from 'react-redux'
+import {setUserEmployeeStatus, setuserIsstudent, setuserDetails} from '../../redux/reducers/userDetails'
 
 
+const SecondPage = () => {
+  const checked = useSelector((state) => state.userDetails.details.userEmployeeStatus);
+  const student  = useSelector((state)=>state.userDetails.details.userIsstudent)
+  console.log(student)
+  const dispatch = useDispatch();
 
-const SecondPage = ({ student, setIsStudent, checked, setChecked }) => {
-  const toggleSwitch = () => setIsStudent((previousState) => !previousState);
+  const setChecked = (value) => {
+    dispatch(setUserEmployeeStatus(value));
+  }
+  const toggleSwitch = () => dispatch(setuserIsstudent(!student));
   const radioButtonsData = [
     {
       id: "1",
@@ -60,6 +69,8 @@ const SecondPage = ({ student, setIsStudent, checked, setChecked }) => {
           radioButtonsData={radioButtonsData}
           value={checked}
           setValue={setChecked}
+          width="95%"
+          Name={"Are you a Current or Former Employee ?"}
         />
       </View>
       <View style={{ alignItems: "center" }}>
@@ -67,7 +78,7 @@ const SecondPage = ({ student, setIsStudent, checked, setChecked }) => {
           title={
             <View
               style={{
-                flexDirection: "row", 
+                flexDirection: "row",
                 alignItems: "center",
               }}
             >

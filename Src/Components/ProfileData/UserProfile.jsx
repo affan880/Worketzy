@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
+import { useSelector } from "react-redux";
 
-export default function UserProfile({addImage, image}) {
+export default function UserProfile({ addImage }) {
+    const image = useSelector((state) => state.userDetails.details.userImage);
 
   return (
     <View style={{justifyContent:'center',alignItems:'center'}} >

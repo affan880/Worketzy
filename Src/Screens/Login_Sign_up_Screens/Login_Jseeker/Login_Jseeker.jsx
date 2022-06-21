@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { firebaseLogin, getVerificationId } from '../../../Components/firebase/firebase';
+import { firebaseLogin} from '../../../Components/firebase/authentication/firebaseLogin';
+import { getVerificationId } from '../../../Components/firebase/authentication/verificationCode';
 import firebaseConfig from '../../../Components/firebase/firebaseConfig';
 import Form from '../../../Components/forms/form';
 import FormErrorMessage from '../../../Components/forms/formErrorMessage';
@@ -17,6 +18,7 @@ let resendOtpTimerInterval;
 
 
 export default function LoginScreen({ navigation }) {
+  
   const recaptchaVerifier = useRef(null);
   const [loginError, setLoginError] = useState("");
   const [verificationId, setVerificationId] = useState(null);
@@ -81,6 +83,7 @@ export default function LoginScreen({ navigation }) {
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
+        attemptInvisibleVerification={true}
       />
 
       {!verificationId && (
@@ -151,8 +154,7 @@ export default function LoginScreen({ navigation }) {
                   )}
             </View>
           </View>
-
-          <FormButton title={"login"} />
+          <FormButton title={"SUBMIT"} color={Colors.secondary} />
           {<FormErrorMessage error={loginError} visible={true} />}
         </Form>
       )}

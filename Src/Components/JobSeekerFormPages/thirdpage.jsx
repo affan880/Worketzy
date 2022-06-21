@@ -1,26 +1,33 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AppSelectdropdown from '../CustomComponents/appSelectdropdown'
 import Colors from '../../utils/Colors';
 import FormField from '../forms/formField';
 import { Feather } from "@expo/vector-icons";
 import FormButton from '../forms/formButton';
-const Thirdpage = ({ setJobTypeOption }) => {
-  const Job_Type = [
+import { useDispatch, useSelector } from 'react-redux';
+import {setuserEmploymentType,setuserDetails} from '../../redux/reducers/userDetails'
+const Thirdpage = () => {
+  const dispatch = useDispatch();
+  const setJob_Type = (val) => {
+    dispatch(setuserEmploymentType(val))
+  }
+  const JobType = [
     "Full-time",
     "Part-time",
     "Self-employed",
     "Free-lance",
     "Contract",
     "Internship",
-  ];
+  ]
+
   return (
     <View>
       <View
         style={{
           alignItems: "flex-start",
           paddingHorizontal: 10,
-          paddingVertical: 10,
+          paddingVertical: 20,
         }}
       >
         <Text style={{ fontSize: 24, fontWeight: "bold", paddingBottom: 10 }}>
@@ -34,8 +41,8 @@ const Thirdpage = ({ setJobTypeOption }) => {
       </View>
       <View style={styles.FormContainer}>
         <AppSelectdropdown
-          Data={Job_Type}
-          setJobTypeOption={setJobTypeOption}
+          Data={JobType}
+          setJobTypeOption={setJob_Type}
           Name={"Employment Type"}
           width="95%"
         />

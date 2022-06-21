@@ -2,7 +2,6 @@ import React from "react";
 import { useFormikContext } from "formik";
 import AppTextInput from "../CustomComponents/appTextInput";
 import FormErrorMessage from "./formErrorMessage";
-
 export default function FormField({ name, width, ...otherProps }) {
   const {
     setFieldTouched,
@@ -16,7 +15,9 @@ export default function FormField({ name, width, ...otherProps }) {
     <React.Fragment>
       <AppTextInput
         value={values[name]}
-        onChangeText={(text) => setFieldValue(name, text)}
+        onChangeText={(text) => {
+          setFieldValue(name, text);
+        }}
         onBlur={() => setFieldTouched(name)}
         width={width}
         {...otherProps}

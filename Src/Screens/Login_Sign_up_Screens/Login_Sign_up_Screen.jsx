@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, } from 'react-native'
 import React from 'react'
 import JobSeekerType from '../../Components/JobType/Job_Type_Selector'
 import Colors from '../../utils/Colors';
+import Spinner from '../../Components/CustomComponents/spinner'; 
 
 export default Login_Sign_up_Screen = () => {
   return (
