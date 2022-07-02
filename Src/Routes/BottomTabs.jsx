@@ -1,12 +1,12 @@
 import * as React from "react";
-import { AceTabBarNavigator, DotSize } from "rn-slick-bottom-tabs";
+import { JanmTabBarNavigator, DotSize } from "rn-slick-bottom-tabs";
 import { Ionicons as Icon } from "@expo/vector-icons";
-import Explore from '../Screens/Explore/explore';
+import Home from '../Screens/Home/home';
 import Profile from '../Screens/Profile/profile';
 import Search from '../Screens/Search/search';
 import Saved from '../Screens/Saved/Saved';
 import Colors from "../utils/Colors";
-const Tabs = AceTabBarNavigator();
+const Tabs = JanmTabBarNavigator();
 
 const TabBarIcon = ({name,size,tintColor}) => {
   return (
@@ -24,30 +24,26 @@ export default () => (
     screenOptions={{
       animation: "slide_from_right",
     }}
-    initialRouteName="Profile"
+    DotSize="large"
+    appearance={{
+      horizontalPadding: 10,
+      tabBarBackground: Colors.white,
+      bottomPadding:15
+    }}
+    initialRouteName="Home"
     tabBarOptions={{
       labelStyle: { fontSize: 12, marginTop: 5, fontWeight: "bold" },
       activeTintColor: Colors.secondary,
-      inactiveTintColor: "#9e9e9e",
-      activeBackgroundColor: "#e5cfff",
+      inactiveTintColor: Colors.mediumGrey,
+      activeBackgroundColor: Colors.secondaryShade,
     }}
   >
     <Tabs.Screen
       name="Explore"
-      component={Explore}
+      component={Home}
       options={{
         tabBarIcon: ({ focused, color }) => (
           <TabBarIcon focused={focused} tintColor={color} name="home-sharp" />
-        ),
-      }}
-    />
-
-    <Tabs.Screen
-      name="Search"
-      component={Search}
-      options={{
-        tabBarIcon: ({ focused, color }) => (
-          <TabBarIcon focused={focused} tintColor={color} name="person" />
         ),
       }}
     />
@@ -56,7 +52,24 @@ export default () => (
       component={Saved}
       options={{
         tabBarIcon: ({ focused, color }) => (
-          <TabBarIcon focused={focused} tintColor={color} name="rocket" />
+          <TabBarIcon
+            focused={focused}
+            tintColor={color}
+            name="bookmark-sharp"
+          />
+        ),
+      }}
+    />
+    <Tabs.Screen
+      name="Search"
+      component={Search}
+      options={{
+        tabBarIcon: ({ focused, color }) => (
+          <TabBarIcon
+            focused={focused}
+            tintColor={color}
+            name="chatbubble-ellipses-sharp"
+          />
         ),
       }}
     />
@@ -66,11 +79,7 @@ export default () => (
       component={Profile}
       options={{
         tabBarIcon: ({ focused, color }) => (
-          <TabBarIcon
-            focused={focused}
-            tintColor={color}
-            name="ios-notifications"
-          />
+          <TabBarIcon focused={focused} tintColor={color} name="person" />
         ),
       }}
     />

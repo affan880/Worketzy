@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import firebase from "firebase/compat";
-export const createUserDocument = async (user, uid, userDetails) => {
-  const userRef = firebase.firestore().collection("users").doc(uid);
+export const createUserDocument = async ( uid, userDetails) => {
+  const userRef = firebase.firestore().collection("JobSeekers").doc(uid);
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
     userRef

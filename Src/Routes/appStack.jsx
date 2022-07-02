@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Profile from "../Screens/Profile/profile";
 import BottomTabs from "./BottomTabs";
+import JobList from "../Screens/JobList/jobList";
 const Stack = createNativeStackNavigator();
 
 
@@ -15,6 +15,7 @@ export default function AppStack() {
         component={BottomTabs}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="JobList" component={JobList} />
     </Stack.Navigator>
   );
 }

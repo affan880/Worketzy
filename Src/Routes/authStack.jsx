@@ -9,9 +9,17 @@ const Stack = createNativeStackNavigator();
 
 export default function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName="Welcome" screenOptions={{headerTitleAlign:'center'}} >
-      <Stack.Screen name="Welcome" component={Login_Sign_up_Screen}  />
-      <Stack.Screen name="Find Job" component={Login_Jseeker} />
+    <Stack.Navigator
+      backBehavior="history"
+      initialRouteName="Welcome"
+      screenOptions={{
+        headerTitleAlign: "center",
+        animation: "slide_from_right",
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Welcome" component={Login_Sign_up_Screen} />
+      <Stack.Screen name="Find Job" component={Login_Jseeker} options={{}} />
       <Stack.Screen name="Find Empolyee" component={Login_Recruiter} />
     </Stack.Navigator>
   );

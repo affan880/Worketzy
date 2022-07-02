@@ -11,7 +11,6 @@ import {useSelector, useDispatch} from 'react-redux'
 const Fourthpage = () => {
   const dispatch = useDispatch();
   const selectedValue = useSelector((state) => state.userDetails.details.userJobType);
-  console.log(selectedValue)
   const userSelectedJobtype = (val) => {
     dispatch(setuserJobType(val));
   }
@@ -70,7 +69,7 @@ const Fourthpage = () => {
                   color: Colors.ghostWhite,
                 }}
               >
-                Next
+                Submit
               </Text>
               <Feather
                 name="chevron-right"

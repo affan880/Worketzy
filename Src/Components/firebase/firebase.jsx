@@ -1,9 +1,11 @@
-import { initializeApp } from "firebase/compat";
-import * as firebase from "firebase/compat";
-import "firebase/firestore";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import "firebase/compat/auth";
+import "firebase/compat/storage";
 import firebaseConfig from "./firebaseConfig";
 
-const app = initializeApp(firebaseConfig);
-export default app;
+if(!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
+export {firebase}

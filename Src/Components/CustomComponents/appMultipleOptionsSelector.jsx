@@ -18,22 +18,22 @@ const DropdownScreen = (_props) => {
   const [data, setData] = useState(dummydata);
   const [dropdown, setDropdown] = useState(null);
     const [selected, setSelected] = useState([]);
-        // useEffect(() => {
-        //   fetch("https://worketzy-job-list.herokuapp.com/api/jobList")
-        //     .then((response) => response.json())
-        //     .then((responseJson) => {
-        //       const b = responseJson
-        //         .map((obj) => obj.subtitle)
-        //         .map((res) =>
-        //           res.map((obj) => ({
-        //             value: obj.id,
-        //             label: obj.title,
-        //           }))
-        //         );
-        //       const merged = [].concat(...b);
-        //       setData(merged);
-        // //     });
-        // }, []);
+        useEffect(() => {
+          fetch("https://worketzy-job-list.herokuapp.com/api/jobList")
+            .then((response) => response.json())
+            .then((responseJson) => {
+              const b = responseJson
+                .map((obj) => obj.subtitle)
+                .map((res) =>
+                  res.map((obj) => ({
+                    value: obj.id,
+                    label: obj.title,
+                  }))
+                );
+              const merged = [].concat(...b);
+              setData(merged);
+            });
+        }, []);
 
   const _renderItem = (item) => {
     return (

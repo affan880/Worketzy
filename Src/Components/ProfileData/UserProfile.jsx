@@ -10,14 +10,13 @@ import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import { useSelector } from "react-redux";
 
-export default function UserProfile({ addImage }) {
-    const image = useSelector((state) => state.userDetails.details.userImage);
+export default function UserProfile({ addImage, width, height, image }) {
 
   return (
     <View style={{justifyContent:'center',alignItems:'center'}} >
-      <View style={imageUploaderStyles.container}>
+      <View style={[imageUploaderStyles.container, {width:width, height:height}]}>
         {image && (
-          <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />
+          <Image source={{ uri: image }} style={{ width: width, height: height }} />
         )}
 
         <View style={imageUploaderStyles.uploadBtnContainer}>
@@ -31,8 +30,8 @@ export default function UserProfile({ addImage }) {
         </View>
       </View>
       <View style={imageUploaderStyles.userName}>
-        <Text style={{ marginVertical: 20, fontSize: 14, color: Colors.black }}>
-          Welcome, FuzzySid
+        <Text style={{ marginVertical: 20, fontSize: 14, color: Colors.black, fontWeight:"500" }}>
+          Welcome
         </Text>
       </View>
     </View>
@@ -42,15 +41,14 @@ export default function UserProfile({ addImage }) {
 const imageUploaderStyles = StyleSheet.create({
   container: {
     elevation: 3,
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     backgroundColor: "#efefef",
     justifyContent:'center',
     borderRadius: 99,
     overflow: "hidden",
   },
   userName: {
-    backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },

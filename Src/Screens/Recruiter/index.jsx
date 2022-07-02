@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import SafeView from '../../Components/CustomComponents/safeView';
-const Saved = () => {
+import SafeView from '../../Components/CustomComponents/safeView'
+
+const index = () => {
   return (
     <SafeView>
-      <Text>Saved</Text>
+      <Text>index</Text>
     </SafeView>
   )
 }
 
-export default Saved
+export default index
 
 const styles = StyleSheet.create({})
