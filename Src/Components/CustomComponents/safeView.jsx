@@ -13,7 +13,6 @@ export default function SafeView({ children, style }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
   },
   container: {
     flex: 1,

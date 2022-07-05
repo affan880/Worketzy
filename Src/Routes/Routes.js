@@ -12,8 +12,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, setDetails, setApplicationType } from "../redux/reducers/userDetails";
 import { setRecruiterStatus } from "../redux/reducers/recruiterDetails";
-import Index from "../Screens/Recruiter";
+import VerificationPage from "../Screens/Recruiter/VerificationPage/VerificationPage";
 import JobRecruiterFormStack from "./jobRecruiterFormStack";
+import RecriuterHome from "../Screens/Recruiter/VerificationPage/VerificationPage";
 
 
 export default function JobTypeSelectorRoute() {
@@ -138,12 +139,23 @@ useEffect(() => {
   
   return (
     <NavigationContainer>
-      {
-        user.id || recruiterStatus.id ?
-          (user.status || recruiterStatus.status ?
-            (ApplicationType === "JobSeekers" ? <AppStack /> : !recruiterStatus.status ?  <JobRecruiterFormStack/> : <Index/>) :
-            (ApplicationType === "JobSeekers" ? <FormStack /> : <JobRecruiterFormStack />)) : <AuthStack />
-      }
+      {user.id || recruiterStatus.id ? (
+        user.status || recruiterStatus.status ? (
+          ApplicationType === "JobSeekers" ? (
+            <AppStack />
+          ) : !recruiterStatus.status ? (
+            <JobRecruiterFormStack />
+          ) : (
+            <VerificationPage />
+          )
+        ) : ApplicationType === "JobSeekers" ? (
+          <FormStack />
+        ) : (
+          <JobRecruiterFormStack />
+        )
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   );
 }

@@ -27,7 +27,6 @@ const JobRecruiterDetails = () => {
   const storeId = async (val) => {
     try {
       await AsyncStorage.setItem("@recruiterId", JSON.stringify(val));
-      console.log("storeId successfully");
     } catch (e) {
       console.log("Error saving data storeId");
     }
@@ -37,9 +36,7 @@ const JobRecruiterDetails = () => {
       await AsyncStorage.setItem(
         "@recruiterDetails",
         JSON.stringify(recruiterDetails)
-      ).then(() => {
-        console.log("Details storeDetails saved");
-      });
+      )
     } catch (e) {
       console.log("Error saving data storeDetails");
     }
@@ -112,7 +109,6 @@ const JobRecruiterDetails = () => {
         companyDetails
       );
       dispatch(setRecruiterDetails(recruiterDetails));
-      console.log(uploaded);
       storeDetails(recruiterDetails);
       // uploadImage(image, setImageUpload, setLoading,user, uid);
       uploaded

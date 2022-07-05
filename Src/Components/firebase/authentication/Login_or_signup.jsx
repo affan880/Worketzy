@@ -51,7 +51,7 @@ export default function LoginScreen({Screen}) {
   }, [resendButtonDisabledTime]);
 
   useEffect(() => { 
-    loadCurrentUser();
+    loadCurrentUser(); 
   },[])
 
   const storeCurrentUser = async () => {
@@ -61,15 +61,17 @@ export default function LoginScreen({Screen}) {
         uid: currentUser.uid,
 
       }));
-      console.log("Working", currentUser.uid)
+      loadCurrentUser();
     } catch (error) {
       console.log(error);
     }
   };
   const loadCurrentUser = async () => { 
     try {
+      console.log("Loading Current User");
       const user = await AsyncStorage.getItem("@CurrentUser");
       user !== null ? dispatch(setUser(user)) : null;
+      console.log("Current User", user);
     } catch (error) {
       console.log(error);
     }
@@ -121,6 +123,7 @@ export default function LoginScreen({Screen}) {
     try {
       setVerifyingCode(true);
       await firebaseLogin({ verificationCode, verificationId });
+      storeCurrentUser();
     } catch (error) {
       setLoginError(error.message);
     
@@ -129,7 +132,7 @@ export default function LoginScreen({Screen}) {
       dispatch(setUser({
         uid: firebase.auth().currentUser.uid,
       }));
-      storeCurrentUser();
+      
       storeType(ApplicationType)
       setVerifyingCode(false);
     }

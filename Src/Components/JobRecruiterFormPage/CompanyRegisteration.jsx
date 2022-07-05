@@ -13,7 +13,6 @@ const CompanyRegisteration = () => {
     const dispatch = useDispatch();
    const addImage = () => {
      const filePath = `CompanyDetails/${CurrentUserID.uid}/CompanyLogo`;
-     console.log(filePath);
      const set = setCompanyLogo;
      uploadImage(filePath, dispatch, set);
    };

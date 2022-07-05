@@ -13,16 +13,16 @@ const CompanyDetails = () => {
   const CurrentUserID = useSelector((state) => state.currentUser.user);
    const image = useSelector((state) => state.currentUser.userImage);
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect(() => {rr
     getMyObject();
   }, []);
   const getMyObject = async () => {
       const user = await AsyncStorage.getItem("@CurrentUser");
-      dispatch(setUser(JSON.parse(user)));
+    dispatch(setUser(JSON.parse(user)));
+    console.log("Done")
   };
   const addImage = () => {
     const filePath = `CompanyDetails/${CurrentUserID.uid}/Recruiter`;
-    console.log(filePath);
     const set = setUserImage;
     uploadImage(filePath,dispatch, set);
   };

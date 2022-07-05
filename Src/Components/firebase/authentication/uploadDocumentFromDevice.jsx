@@ -14,7 +14,7 @@ const uploadDocumentFromDevice = async (dispatch, setDocuments, setProgress) => 
     const fileSize = res.size;
     const name = res.name;
     if (res.type === "cancel") {
-      console.log("User cancelled document picker");
+      // console.log("User cancelled document picker");
       return false;
     }
     else {
@@ -62,7 +62,8 @@ const uploadtoFirebase = async (res, fileSize, name, setProgress) => {
     () => {
       // Upload completed successfully, now we can get the download URL
       snapshot.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log("File available at", downloadURL);
+        // console.log("File available at", downloadURL);
+        return true
       });
     }
   );

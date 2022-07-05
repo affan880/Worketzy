@@ -14,7 +14,7 @@ export const createRecruiterDocument = async (
     userRef
       .set(recruiterDetails)
       .then(function () {
-        console.log("Value successfully written!");
+        return true;
       })
       .catch(function (error) {
         console.error("Error writing Value: ", error);
@@ -24,7 +24,7 @@ export const createRecruiterDocument = async (
       compRef
         .set(companyDetails)
         .then(function () {
-          console.log("Value successfully written! companyDetails");
+          return true;
         })
         .catch(function (error) {
           console.error("Error writing Value companyDetails: ", error);

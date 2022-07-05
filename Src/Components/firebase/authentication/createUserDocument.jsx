@@ -8,7 +8,8 @@ export const createUserDocument = async ( uid, userDetails) => {
     userRef
       .set(userDetails)
       .then(function () {
-        console.log("Value successfully written!");
+        return true;
+        // console.log("Value successfully written!");
       })
       .catch(function (error) {
         console.error("Error writing Value: ", error);

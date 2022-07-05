@@ -70,7 +70,6 @@ const DropdownScreen = (_props) => {
         value={selected}
         onChange={(item) => {
           setSelected(item);
-          console.log("selected", item);
         }}
         renderItem={(item) => _renderItem(item)}
         dropdownPosition={"bottom"}

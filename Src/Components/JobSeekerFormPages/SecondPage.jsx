@@ -13,7 +13,6 @@ import {setUserEmployeeStatus, setuserIsstudent, setuserDetails} from '../../red
 const SecondPage = () => {
   const checked = useSelector((state) => state.userDetails.details.userEmployeeStatus);
   const student  = useSelector((state)=>state.userDetails.details.userIsstudent)
-  console.log(student)
   const dispatch = useDispatch();
 
   const setChecked = (value) => {
