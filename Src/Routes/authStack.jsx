@@ -16,6 +16,7 @@ export default function AuthStack() {
         headerTitleAlign: "center",
         animation: "slide_from_right",
         headerShown: false,
+        tabBarHideOnKeyboard: "true",
       }}
     >
       <Stack.Screen name="Welcome" component={Login_Sign_up_Screen} />

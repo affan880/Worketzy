@@ -6,7 +6,10 @@ const Stack = createNativeStackNavigator();
 export default function FormStack() {
   return (
     <Stack.Navigator
-      screenOptions={{ headerTitleAlign: "center" }}
+      screenOptions={{
+        headerTitleAlign: "center",
+        tabBarHideOnKeyboard: "true",
+      }}
       initialRouteName={"Details"}
     >
       <Stack.Screen

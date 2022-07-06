@@ -6,11 +6,12 @@ import FormField from "../forms/formField";
 import { Feather } from "@expo/vector-icons";
 import FormButton from "../forms/formButton";
 import DropdownScreen from "../CustomComponents/appMultipleOptionsSelector";
-import {setuserJobType} from '../../redux/reducers/userDetails'
+import {setuserJobType, setUserJobExpectedRole} from '../../redux/reducers/userDetails'
 import {useSelector, useDispatch} from 'react-redux'
 const Fourthpage = () => {
   const dispatch = useDispatch();
   const selectedValue = useSelector((state) => state.userDetails.details.userJobType);
+
   const userSelectedJobtype = (val) => {
     dispatch(setuserJobType(val));
   }
@@ -30,7 +31,10 @@ const Fourthpage = () => {
   return (
     <View>
       <View style={styles.FormContainer}>
-        <DropdownScreen Name="What kind of role you are looking for? " />
+        <DropdownScreen
+          Name="What kind of role you are looking for? "
+          set={setUserJobExpectedRole}
+        />
         <AppRadioButton
           radioButtonsData={radioButtonsData}
           value={selectedValue}

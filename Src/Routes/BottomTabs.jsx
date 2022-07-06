@@ -23,12 +23,13 @@ export default () => (
     backBehavior="history"
     screenOptions={{
       animation: "slide_from_right",
+      tabBarHideOnKeyboard: "true",
     }}
     DotSize="large"
     appearance={{
       horizontalPadding: 10,
       tabBarBackground: Colors.white,
-      bottomPadding:15
+      bottomPadding: 15,
     }}
     initialRouteName="Home"
     tabBarOptions={{

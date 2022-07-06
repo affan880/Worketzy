@@ -9,7 +9,10 @@ const Stack = createNativeStackNavigator();
 
 export default function JobRecruiterFormStack() {
   return (
-    <Stack.Navigator initialRouteName={"Details"}>
+    <Stack.Navigator
+      initialRouteName={"Details"}
+      screenOptions={{ tabBarHideOnKeyboard: "true" }}
+    >
       <Stack.Screen
         name="Details"
         component={JobRecruiterDetails}

@@ -14,6 +14,7 @@ import Spinner from "../../../Components/CustomComponents/spinner";
 import Colors from "../../../utils/Colors";
 import { setApplicationType } from "../../../redux/reducers/userDetails";
 import { setUser } from "../../../redux/reducers/currentUser";
+import { setUidForJobInfo } from "../../../redux/reducers/jobInfo";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "firebase/compat";
 import {
@@ -132,6 +133,7 @@ export default function LoginScreen({Screen}) {
       dispatch(setUser({
         uid: firebase.auth().currentUser.uid,
       }));
+      dispatch(setUidForJobInfo(firebase.auth().currentUser.uid));
       
       storeType(ApplicationType)
       setVerifyingCode(false);

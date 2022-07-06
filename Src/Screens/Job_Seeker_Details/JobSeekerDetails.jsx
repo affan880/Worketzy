@@ -15,7 +15,7 @@ import { setUserImage } from "../../redux/reducers/currentUser";
 import uploadImage from "../../Components/firebase/authentication/UploadImage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const JobSeekerDetails = () => {
-  const uid = useSelector((state) => state.userDetails.user.id);
+  const uid = useSelector((state) => state.recruiterDetails.recruiterStatus.id);
   const user = useSelector((state) => state.userDetails.user.status);
   const details = useSelector((state) => state.userDetails.details);
   const image = useSelector((state) => state.currentUser.userImage);
@@ -56,6 +56,7 @@ const JobSeekerDetails = () => {
       console.log("load" + err);
     }
   }; 
+  //2,4,5,6,7,9,10,11,12,13
 
   const Details = {
     ValidFirstName: "",
@@ -83,6 +84,7 @@ const JobSeekerDetails = () => {
          userEmploymentType: details.userEmploymentType,
          userPreferedCity: details.userPreferedCity,
          userJobType: details.userJobType,
+         userJobExpectedRole: details.userJobExpectedRole,
          userJobCategory: details.userJobCategory,
          userNextJobExpectations: details.userNextJobExpectations,
          userUniqueId: uid

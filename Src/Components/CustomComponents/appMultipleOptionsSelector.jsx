@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import Colors from "../../utils/Colors";
+import { useDispatch } from "react-redux";
 
 const dummydata = [
   { label: "Item 1", value: "1" },
@@ -15,8 +16,8 @@ const dummydata = [
 ];
 
 const DropdownScreen = (_props) => {
+  const dispatch = useDispatch();
   const [data, setData] = useState(dummydata);
-  const [dropdown, setDropdown] = useState(null);
     const [selected, setSelected] = useState([]);
         useEffect(() => {
           fetch("https://worketzy-job-list.herokuapp.com/api/jobList")
@@ -26,7 +27,7 @@ const DropdownScreen = (_props) => {
                 .map((obj) => obj.subtitle)
                 .map((res) =>
                   res.map((obj) => ({
-                    value: obj.id,
+                    value: obj.title,
                     label: obj.title,
                   }))
                 );
@@ -70,6 +71,7 @@ const DropdownScreen = (_props) => {
         value={selected}
         onChange={(item) => {
           setSelected(item);
+          dispatch(_props.set(item));
         }}
         renderItem={(item) => _renderItem(item)}
         dropdownPosition={"bottom"}

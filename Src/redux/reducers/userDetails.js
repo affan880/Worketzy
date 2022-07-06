@@ -19,6 +19,7 @@ export const userDetailsSlice = createSlice({
       userEmploymentType: "",
       userPreferedCity: "",
       userJobType: "",
+      userJobExpectedRole:[],
       userJobCategory: "",
       userNextJobExpectations: "",
     },
@@ -68,6 +69,9 @@ export const userDetailsSlice = createSlice({
     setApplicationType: (state, action) => {
       state.applicationType = action.payload;
     },
+    setUserJobExpectedRole: (state, action) => { 
+      state.details.userJobExpectedRole = action.payload;
+    }
   },
 });
 
@@ -82,5 +86,6 @@ export const {
   setuserJobType,
   setDetails,
   setApplicationType,
+  setUserJobExpectedRole,
 } = userDetailsSlice.actions;
 export default userDetailsSlice.reducer;

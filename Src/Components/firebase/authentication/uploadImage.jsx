@@ -66,6 +66,7 @@ const uploadtoFirebase = async (res, fileSize, filePath, dispatch, set)=> {
       // Upload completed successfully, now we can get the download URL
       snapshot.snapshot.ref.getDownloadURL().then((downloadURL) => {
         dispatch(set(downloadURL));
+        console.log("downloadURL", downloadURL);
       });
     }
   );

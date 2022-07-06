@@ -31,16 +31,16 @@ const AppSelectdropdown = ({Data, setJobTypeOption, Name, width}) => {
           )}
           dropdownOverlayColor={Colors.lightGrey}
           dropdownStyle={{
-            width: "80%",
-            height: "35%",
+            // width: "80%",
+            // height: "35%",
             bottom: 10,
             borderWidth: 1,
             borderColor: Colors.mediumGrey,
             borderRadius: 10,
             padding: 10,
-            alignContent: "center",
-            justifyContent: "center",
-            alignSelf: "center",
+            // alignContent: "center",
+            // justifyContent: "center",
+            // alignSelf: "center",
           }}
           data={Data}
           onSelect={(selectedItem, index) => {

@@ -39,17 +39,18 @@ const JobRecruiterAppStack = () => {
     return (
       <Tabs.Navigator
         screenOptions={{
+          tabBarHideOnKeyboard: "true",
           tabBarShowLabel: false,
           headerShown: "false",
           tabBarStyle: {
             position: "absolute",
-            bottom: 25,
+            bottom: 15,
             left: 20,
             right: 20,
             elevation: 0,
             backroundColor: Colors.secondary,
             borderRadius: 15,
-            height: 90,
+            height: 70,
             ...styles.shadow,
           },
         }}

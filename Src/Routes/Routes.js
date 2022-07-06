@@ -148,7 +148,7 @@ useEffect(() => {
           ) : (
             <VerificationPage />
           )
-        ) : ApplicationType === "JobSeekers" ? (
+        ) : ApplicationType === "JobSeekers" && !user.status? (
           <FormStack />
         ) : (
           <JobRecruiterFormStack />
