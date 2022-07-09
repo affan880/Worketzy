@@ -8,24 +8,34 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from '../../utils/Colors';
+import Spinner from "./spinner";
 import { useSelector } from "react-redux";
 
-export default function ImageForBanner({ addImage, width, height, image }) {
+export default function ImageForBanner({ addImage, width, height, image, progress }) {
 
   return (
     <View style={{justifyContent:'center',alignItems:'center',marginTop:20}} >
-      <View style={[imageUploaderStyles.container, {width:width, height:height}]}>
-        {image && (
-          <Image source={{ uri: image }} style={{ width: width, height: height }} />
-        )}
-
+      <View style={[imageUploaderStyles.container, {width:width, height:height, ...imageUploaderStyles.shadow}]}>
+          <Image source={{ uri: image }} style={{ width: "100%", height: "100%",}} />
         <View style={imageUploaderStyles.uploadBtnContainer}>
           <TouchableOpacity
             onPress={()=>addImage()}
-            style={imageUploaderStyles.uploadBtn}
+            style={{ ...imageUploaderStyles.uploadBtn, ...imageUploaderStyles.shadow }}
           >
-            <Text>{image ? "Edit" : "Upload"} Image</Text>
-            <AntDesign name="camera" size={15} color="black" />
+            {
+              progress === "100.00" ?
+                <View style={imageUploaderStyles.uploadBtn} >
+                <Text>{image ? "Edit" : "Upload"} Image</Text>
+                <AntDesign name="camera" size={15} color="black" />
+                </View> : progress === false ?
+                   <View style={imageUploaderStyles.uploadBtn} >
+                <Text>{image ? "Edit" : "Upload"} Image</Text>
+                <AntDesign name="camera" size={15} color="black" />
+                  </View> :
+                   <View style={imageUploaderStyles.uploadBtn} >
+                   <Spinner/>
+                </View>
+            }
           </TouchableOpacity>
         </View>
       </View>
@@ -39,7 +49,7 @@ const imageUploaderStyles = StyleSheet.create({
     height: 100,
     width: 100,
     backgroundColor: "#efefef",
-    justifyContent:'center',
+    justifyContent: "center",
     borderRadius: 10,
     overflow: "hidden",
   },
@@ -60,5 +70,12 @@ const imageUploaderStyles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  shadow: {
+    shadowColor: "#7F5DF0",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 8,
   },
 });

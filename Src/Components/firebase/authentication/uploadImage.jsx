@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import firebase from "firebase/compat/app";
 import * as ImagePicker from "expo-image-picker";
 import hasMediaLibraryPermissionGranted from "./hasMediaPermission";
-const uploadImage = async (filePath, dispatch, set) => {
+const uploadImage = async (filePath, dispatch, set, progress, setProgress) => {
   let imgURI = null;
   const storagePermissionGranted = await hasMediaLibraryPermissionGranted();
 
@@ -19,7 +19,10 @@ const uploadImage = async (filePath, dispatch, set) => {
     if (!res.cancelled) {
       const fileSize = res.size;
       const name = res.name;
-      uploadtoFirebase(res, fileSize, filePath, dispatch, set);
+      uploadtoFirebase(res, fileSize, filePath, dispatch, set, progress, setProgress);
+    }
+    else {
+      return null
     }
   } catch (err) {
     console.log("error -----", err);
@@ -28,7 +31,15 @@ const uploadImage = async (filePath, dispatch, set) => {
   return imgURI;
 };
 
-const uploadtoFirebase = async (res, fileSize, filePath, dispatch, set)=> {
+const uploadtoFirebase = async (
+  res,
+  fileSize,
+  filePath,
+  dispatch,
+  set,
+  progress,
+  setProgress
+) => {
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -48,12 +59,12 @@ const uploadtoFirebase = async (res, fileSize, filePath, dispatch, set)=> {
   snapshot.on(
     "state_changed",
     (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = Math.fround(
+      const prog = Math.fround(
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       ).toFixed(2);
-
-      // setProgress(progress);
+      setProgress(prog + "%" + " Uploaded");
+      // setProgress(prog);
+      // prog === 100.0 ? setProgress(null) : null;
       // Monitor uploading progress
       // onProgress && onProgress(Math.fround(progress).toFixed(2));
     },
@@ -66,7 +77,7 @@ const uploadtoFirebase = async (res, fileSize, filePath, dispatch, set)=> {
       // Upload completed successfully, now we can get the download URL
       snapshot.snapshot.ref.getDownloadURL().then((downloadURL) => {
         dispatch(set(downloadURL));
-        console.log("downloadURL", downloadURL);
+        setProgress(false);
       });
     }
   );

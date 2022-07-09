@@ -69,10 +69,8 @@ export default function LoginScreen({Screen}) {
   };
   const loadCurrentUser = async () => { 
     try {
-      console.log("Loading Current User");
       const user = await AsyncStorage.getItem("@CurrentUser");
       user !== null ? dispatch(setUser(user)) : null;
-      console.log("Current User", user);
     } catch (error) {
       console.log(error);
     }

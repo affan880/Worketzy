@@ -3,18 +3,22 @@ import React,{useEffect, useState} from 'react'
 import Colors from '../../../utils/Colors';
 import SafeView from '../../../Components/CustomComponents/safeView';
 import Form from '../../../Components/forms/form';
-import DropdownScreen from '../../../Components/CustomComponents/appMultipleOptionsSelector'
 import FormField from '../../../Components/forms/formField';
 import ImageForBanner from '../../../Components/CustomComponents/imageForBanner'
 import { useSelector, useDispatch } from 'react-redux';
 import AppSelectdropdown from '../../../Components/CustomComponents/appSelectdropdown';
 import firebase from 'firebase/compat';
 import uploadImage from '../../../Components/firebase/authentication/UploadImage';
-import { setBanner, setJobInfoTitle, setJobType } from '../../../redux/reducers/jobInfo';
+import { setBanner, setJobInfoTitle, setJobType, setCreateJobInfo } from '../../../redux/reducers/jobInfo';
 import FormButton from '../../../Components/forms/formButton';
-
+import { post } from '../../../Functions/postRequest';
+import { useNavigation } from '@react-navigation/native';
 const CreateJob = () => {
+  const navigation = useNavigation();
+  const userId = useSelector((state) => state.currentUser.user.uid);
+  const jobInfo = useSelector((state) => state.jobInfo.createJobInfo);
   const [JobTitles, setJobTitles] = useState(Titles);
+  const [progress, setProgress] = useState(false);
   const Titles = [
   "Engineering",
   "Software Engineering",
@@ -52,17 +56,17 @@ const CreateJob = () => {
         const merged = [].concat(...b);
         setJobTitles(merged);
       });
-  }, [])
-  const dispatch = useDispatch();
-  const Image = useSelector(
-    (state) => state.jobInfo.createJobInfo.ImageForBanner
-  );
-  const Details = {
-    JobDescription: "",
-    RequiredSkills: "",
-    JobRequirements: "",
-    JobLocation:""
-  };
+    }, [])
+    const dispatch = useDispatch();
+    const Image = useSelector(
+      (state) => state.jobInfo.createJobInfo.ImageForBanner
+      );
+      const Details = {
+        JobDescription: "",
+        RequiredSkills: "",
+        JobRequirements: "",
+        JobLocation:""
+      };
 
     const setJob_Titles = (val) => {
       dispatch(setJobInfoTitle(val));
@@ -77,13 +81,45 @@ const CreateJob = () => {
       "Free-lance",
       "Contract",
       "Internship",
-    ];
+  ];
   const addImage = () => {
     const filePath = `Jobs/${firebase.auth().currentUser.uid}/${Math.random() * 10}`;
     const set = setBanner;
-    uploadImage(filePath, dispatch, set);
+    uploadImage(filePath, dispatch, set, progress, setProgress);
     dispatch(setBanner(filePath));
   };
+  const submit = (values) => {
+    const { JobDescription, RequiredSkills, JobRequirements, JobLocation } = values;
+    const data = {
+      recruiterId: `${userId}`,
+      jobsUniqueId: `${Math.round(Math.random() * 1000000000)}`,
+      jobTitle: `${jobInfo.JobTitle}`,
+      jobInfo: {
+        image:`${jobInfo.ImageForBanner}`,
+        jobTitle: `${jobInfo.JobTitle}`,
+        jobType: `${jobInfo.JobType}`,
+        jobDescription:`${JobDescription}`,
+        requiredSkills: `${RequiredSkills}`,
+        jobRequirements: `${JobRequirements}`,
+        jobLocation: `${JobLocation}`,
+      },
+    };
+    const url = "https://worketzy.herokuapp.com/api/jobs/";
+    const msg = "Job Created Successfully";
+    post(data, url, msg, navigation);
+    dispatch(
+      setCreateJobInfo({
+        UniqueId: "",
+        ImageForBanner:"https://firebasestorage.googleapis.com/v0/b/worketzy-eecf2.appspot.com/o/images%2FEngineer2.jpg?alt=media&token=34936b04-639d-4530-815c-eb2508e98b44",
+        JobType: "",
+        JobTitle: "",
+        JobDescription: "",
+        RequiredSkills: "",
+        JobRequirements: "",
+        JobLocation: "",
+      })
+    );
+  }
   return (
     <SafeView
       style={{ backgroundColor: Colors.primary, width: "100%", height: "100%" }}
@@ -95,18 +131,32 @@ const CreateJob = () => {
           width={"95%"}
           height={180}
           addImage={addImage}
+          progress ={progress}
         />
-        <View style={{ justifyContent: "center", alignItems: "center", marginBottom:100 }}>
-          <Form initialValues={Details} onSubmit={()=>{console.log("done")}} >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 100,
+          }}
+        >
+          <Form
+            initialValues={Details}
+            onSubmit={(values, { resetForm }) => {
+              submit(values);
+
+              resetForm(Details);
+            }}
+          >
             <AppSelectdropdown
               Data={JobType}
-              setJobTypeOption={setJob_Titles}
+              setJobTypeOption={setJob_Type}
               Name={"Job Type"}
               width="95%"
             />
             <AppSelectdropdown
               Data={JobTitles}
-              setJobTypeOption={setJob_Type}
+              setJobTypeOption={setJob_Titles}
               Name={"Job Title"}
               width="95%"
             />
@@ -138,7 +188,11 @@ const CreateJob = () => {
               placeholder="Please fill in job location"
               width={"95%"}
             />
-            <FormButton title={"Submit"} color={Colors.secondary} width={"95%"} />
+            <FormButton
+              title={"Submit"}
+              color={Colors.secondary}
+              width={"95%"}
+            />
           </Form>
         </View>
       </ScrollView>
@@ -155,5 +209,6 @@ const CreateJob = () => {
         paddingTop:30,
         color: Colors.secondary,
         fontWeight: 'bold',
+        textDecorationLine: 'underline',
       }
 })

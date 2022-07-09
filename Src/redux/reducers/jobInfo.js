@@ -5,8 +5,7 @@ export const createJobInfoSlice = createSlice({
   initialState: {
     createJobInfo: {
       UniqueId: "",
-      ImageForBanner:
-        "https://firebasestorage.googleapis.com/v0/b/worketzy-0.appspot.com/o/UserIcons%2Fuser.png?alt=media&token=ef8142c6-bf5a-44e1-927e-cd6903c4dac8",
+      ImageForBanner:"https://firebasestorage.googleapis.com/v0/b/worketzy-eecf2.appspot.com/o/images%2FEngineer2.jpg?alt=media&token=34936b04-639d-4530-815c-eb2508e98b44",
       JobType:"",
       JobTitle:"",
       JobDescription:"",
@@ -27,9 +26,12 @@ export const createJobInfoSlice = createSlice({
     },
     setJobType: (state, action) => {
       state.createJobInfo.JobType = action.payload
+    },
+    setCreateJobInfo: (state, action) => {
+      state.createJobInfo = action.payload
     }
   },
 });
 
-export const { setBanner, setUidForJobInfo,setJobInfoTitle, setJobType, } = createJobInfoSlice.actions;
+export const { setBanner, setUidForJobInfo,setJobInfoTitle, setJobType, setCreateJobInfo} = createJobInfoSlice.actions;
 export default createJobInfoSlice.reducer;

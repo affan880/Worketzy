@@ -47,22 +47,14 @@ const uploadtoFirebase = async (res, fileSize, name, setProgress) => {
   snapshot.on(
     "state_changed",
     (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       const progress =  Math.fround((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(2)
-
       setProgress(progress);
-      // Monitor uploading progress
-      // onProgress && onProgress(Math.fround(progress).toFixed(2));
     },
     (error) => {
-      // Something went wrong - dispatch onFail event with error  response
-      // onFail && onFail(error);
       console.log("error -----", error);
     },
     () => {
-      // Upload completed successfully, now we can get the download URL
       snapshot.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        // console.log("File available at", downloadURL);
         return true
       });
     }

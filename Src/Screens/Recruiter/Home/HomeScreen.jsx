@@ -1,26 +1,33 @@
 import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import SafeView from '../../../Components/CustomComponents/safeView';
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import Colors from '../../../utils/Colors';
+import PostAJobBtn from './postAJobBtn';
 import { useNavigation } from '@react-navigation/native';
+import getData from '../../../Functions/getData';
+import Spinner from '../../../Components/CustomComponents/spinner';
+import { useSelector } from 'react-redux';
+import JobsPostedData from './jobsPostedData';
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const HomeScreen = () => {
   const navigation = useNavigation(); 
+  const [jobsCreated, setJobsCreated] = useState(null);
+  const [jobsData, setJobsData] = useState("");
+  const userId = useSelector((state) => state.currentUser.user.uid);
+  
+  useEffect(() => {
+    const URL = `https://worketzy.herokuapp.com/api/jobs/${userId}`;
+    getData(URL, setJobsCreated, setJobsData);
+  }, []);
   return (
     <SafeView
       style={{ backgroundColor: Colors.primary, width: "100%", height: "100%", }}
-    >
-      <View style={{justifyContent:"center", alignItems:"center", alignContent:"center", width:width, height:height}} >
-      <View style={styles.Card} >
-      <Text style={styles.headerText} >No Job Openings are Created</Text>
-          <TouchableOpacity style={styles.Navigationbutton} onPress={() => {
-            navigation.navigate('CreateJob');
-      }} >
-      <Text style={styles.navigationBtnText} >Create Jobs</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+    >{
+        jobsCreated === null ?
+          <Spinner/> : jobsCreated === true ?
+      <JobsPostedData/> : <PostAJobBtn/>
+    }
     </SafeView>
   );
 }

@@ -13,7 +13,7 @@ const CompanyDetails = () => {
   const CurrentUserID = useSelector((state) => state.currentUser.user);
    const image = useSelector((state) => state.currentUser.userImage);
   const dispatch = useDispatch();
-  useEffect(() => {rr
+  useEffect(() => {
     getMyObject();
   }, []);
   const getMyObject = async () => {
