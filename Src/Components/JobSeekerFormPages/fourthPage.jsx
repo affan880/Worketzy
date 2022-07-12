@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import React, { useState } from "react";
 import AppRadioButton from "../CustomComponents/appRadioButton"
 import Colors from "../../utils/Colors";
@@ -31,6 +31,7 @@ const Fourthpage = () => {
   return (
     <View>
       <View style={styles.FormContainer}>
+        <StatusBar translucent backgroundColor={Colors.primary} />
         <DropdownScreen
           Name="What kind of role you are looking for? "
           set={setUserJobExpectedRole}
@@ -93,7 +94,7 @@ export default Fourthpage;
 
 const styles = StyleSheet.create({
   FormContainer: {
-    paddingTop: "5%",
+    paddingTop: "15%",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

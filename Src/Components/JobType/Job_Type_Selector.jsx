@@ -1,9 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Button, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import JobTypes from './Job_Types';
 import React from 'react';
 import Colors from '../../utils/Colors';
+import {
+  Montserrat_600SemiBold,
+  Montserrat_600SemiBold_Italic,
+  Montserrat_700Bold,
+  Montserrat_700Bold_Italic,
+  Montserrat_800ExtraBold,
+  Montserrat_800ExtraBold_Italic,
+  Montserrat_900Black,
+  Montserrat_900Black_Italic,
+} from "@expo-google-fonts/montserrat";
+import { useFonts } from "expo-font";
+
 const JobSeekerType = () => {
+
   const navigation = useNavigation();
   var [isPress, setIsPress] = React.useState(true);
   const onTouchJob = {
@@ -21,20 +34,21 @@ const JobSeekerType = () => {
    };
   return (
     <View style={styles.Container}>
-      <View style={styles.Types}>
+      <StatusBar translucent backgroundColor={Colors.primary} />
+      <View style={{ ...styles.Types, ...styles.shadow }}>
         <TouchableOpacity {...onTouchJob}>
           <JobTypes
-            TextColor={isPress ? Colors.mediumGrey : Colors.mediumGrey}
+            TextColor={isPress ? Colors.textColor2 : Colors.textColor}
             JobType="Find Job"
-            JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            JobTypeDesc="We make it easy for you to find the right job"
             image={JobTypeICons.FindJob}
           />
         </TouchableOpacity>
         <TouchableOpacity {...onTouchRec}>
           <JobTypes
-            TextColor={isPress ? Colors.mediumGrey : Colors.mediumGrey}
+            TextColor={isPress ? Colors.textColor : Colors.textColor2}
             JobType="Find Employee"
-            JobTypeDesc="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            JobTypeDesc="Hire the best talent for your work"
             image={JobTypeICons.FindEmployee}
           />
         </TouchableOpacity>
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
     color: Colors.black ,
     backgroundColor: Colors.white,
     borderWidth: 2,
-    borderColor: Colors.mediumGrey,
+    borderColor: Colors.secondary,
     borderRadius: 18,
   },
   SelectorOptionOnClick: {
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
     height: "90%",
     backgroundColor: Colors.secondary,
     borderWidth: 2,
-    borderColor: Colors.secondary,
+    borderColor: Colors.textColor2,
     borderRadius: 18,
     margin: "1.5%",
   },
@@ -102,7 +116,9 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: Colors.secondary,
     borderRadius: 24,
-    justifyContent:'center'
+    justifyContent: 'center',
+    borderColor: Colors.textColor2,
+    borderWidth: 1,
   },
   BtnTextStyle: {
     fontStyle: "normal",
@@ -114,5 +130,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: "#FFFFFF",
   },
+  shadow: {
+        shadowColor: '#7F5DF0',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
+    }
 });
 

@@ -27,7 +27,7 @@ export const userDetailsSlice = createSlice({
       status: "",
       id: "",
     },
-    applicationType: "",
+    applicationType: null,
   },
   reducers: {
     setDetails: (state, action) => {

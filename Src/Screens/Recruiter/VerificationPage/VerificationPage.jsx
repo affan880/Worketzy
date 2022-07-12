@@ -7,6 +7,7 @@ import { setUser } from '../../../redux/reducers/currentUser'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from 'firebase/compat'
 import JobRecruiterAppStack from '../../../Routes/JobRecruiterAppStack'
+import AppStack2 from '../../../Routes/AppStack2'
 const VerificationPage = () => {
     const dispatch = useDispatch()
     const [isVerified, setIsVerified] = useState(false)
@@ -50,7 +51,7 @@ const VerificationPage = () => {
   return (
       <SafeView>
           {
-              isVerified === false ? <Verification verify ={verification} /> : <JobRecruiterAppStack />
+              isVerified === false ? <Verification verify ={verification} /> : <AppStack2 />
           }
     </SafeView>
   )

@@ -2,10 +2,12 @@ import { StyleSheet, Text, View, StatusBar, Dimensions, TouchableOpacity } from 
 import React from 'react'
 import SafeView from '../../Components/CustomComponents/safeView'
 import Colors from '../../utils/Colors'
-
+import { useChatContext } from "stream-chat-expo";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const Verification = ({verify}) => {
+const Verification = ({ verify }) => {
+    
+    
   return (
     <SafeView style={{ backgroundColor: Colors.primary }}>
       <StatusBar translucent backgroundColor={Colors.primary} />

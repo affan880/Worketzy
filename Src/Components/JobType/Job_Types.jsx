@@ -1,8 +1,34 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import Colors from "../../utils/Colors";
-
+import { useFonts } from "expo-font";
+import {
+  Montserrat_100Thin,
+  Montserrat_100Thin_Italic,
+  Montserrat_200ExtraLight,
+  Montserrat_200ExtraLight_Italic,
+  Montserrat_300Light,
+  Montserrat_300Light_Italic,
+  Montserrat_400Regular,
+  Montserrat_400Regular_Italic,
+  Montserrat_500Medium,
+  Montserrat_500Medium_Italic,
+  Montserrat_600SemiBold,
+  Montserrat_600SemiBold_Italic,
+  Montserrat_700Bold,
+  Montserrat_700Bold_Italic,
+  Montserrat_800ExtraBold,
+  Montserrat_800ExtraBold_Italic,
+  Montserrat_900Black,
+  Montserrat_900Black_Italic,
+} from "@expo-google-fonts/montserrat";
 function JobTypes(props) {
+      let [fontsLoaded, error] = useFonts({
+        Montserrat_700Bold_Italic
+      });
+      if (!fontsLoaded) {
+        return null;
+      }
   return (
     <View style={styles.Container}>
       <View style={styles.IconContainer}>
@@ -11,18 +37,15 @@ function JobTypes(props) {
       <View style={styles.JobTypeContainerText}>
         <Text style={styles.FindJobText}>{props.JobType}</Text>
         <Text
-          style={
-            (
-            {
-              color: props.TextColor,
-              fontStyle: "italic",
-              fontSize: 12,
-              lineHeight: 20,
-              textAlign: "center",
-              fontWeight: "100",
-              letterSpacing: 1,
-            })
-          }
+          style={{
+            color: props.TextColor,
+            fontFamily: "Montserrat_700Bold_Italic",
+            fontSize: 12,
+            lineHeight: 20,
+            textAlign: "center",
+            fontWeight: "500",
+            letterSpacing: 1,
+          }}
         >
           {props.JobTypeDesc}
         </Text>
@@ -67,7 +90,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "900",
     letterSpacing: 1,
-    color: Colors.black,
+    color: Colors.primary,
     paddingBottom:20
   },
   FindJobContext: {

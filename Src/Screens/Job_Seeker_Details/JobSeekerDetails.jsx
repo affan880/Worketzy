@@ -13,12 +13,17 @@ import { useSelector, useDispatch } from "react-redux"
 import { setUser, setDetails } from "../../redux/reducers/userDetails";
 import { setUserImage } from "../../redux/reducers/currentUser";
 import uploadImage from "../../Components/firebase/authentication/UploadImage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
+import firebase from "firebase/compat";
+import { useNavigation } from "@react-navigation/native";
+
 const JobSeekerDetails = () => {
+  const navigation = useNavigation();
   const uid = useSelector((state) => state.recruiterDetails.recruiterStatus.id);
   const user = useSelector((state) => state.userDetails.user.status);
   const details = useSelector((state) => state.userDetails.details);
   const image = useSelector((state) => state.currentUser.userImage);
+  const [progress, setProgress] = useState();
   const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState("1");
     useEffect(() => {
@@ -56,7 +61,6 @@ const JobSeekerDetails = () => {
       console.log("load" + err);
     }
   }; 
-  //2,4,5,6,7,9,10,11,12,13
 
   const Details = {
     ValidFirstName: "",
@@ -90,6 +94,11 @@ const JobSeekerDetails = () => {
          userUniqueId: uid
        };
        const uploaded = createUserDocument(user, uid, userDetails);
+       firebase.auth().currentUser.updateProfile({
+         displayName: `${ValidFirstName +""+ ValidLastName}`,
+         photoURL: image,
+         email : ValidEmail
+       });
        dispatch(setDetails(userDetails));
         storeDetails(userDetails);
       uploaded
@@ -97,7 +106,9 @@ const JobSeekerDetails = () => {
             status: true,
             id: uid,
           }))
-        : console.log("Error uploading user Data");
+         : console.log("Error uploading user Data");
+       
+       console.log("Saved Details");
     } catch (error) {
       console.log("error it is", error);
      }
@@ -108,10 +119,22 @@ const JobSeekerDetails = () => {
       })
      }
   }
+  const updateDetails = (values) => {
+    const { ValidFirstName, ValidLastName, ValidEmail, Bio, UniversityName } = values; 
+    console.log("hereee")
+      firebase.auth().currentUser.updateProfile({
+         displayName: `${ValidFirstName + " " + ValidLastName}`,
+         photoURL: image,
+         email : ValidEmail
+      });
+    setIsHidden("4");
+    console.log("Done");
+  }
+
   const addImage = async () => {
      const filePath = `UserDetails/profilePic/${uid}/JobSeeker`;
      const set = setUserImage;
-     uploadImage(filePath, dispatch, set);
+     uploadImage(filePath, dispatch, set, progress, setProgress);
   };
   return (
     <ScrollView style={{ backgroundColor: Colors.primary }}>
@@ -125,14 +148,14 @@ const JobSeekerDetails = () => {
               : isHidden === "2"
               ? setIsHidden("3")
               : isHidden === "3"
-              ? setIsHidden("4")
+              ? updateDetails(values)
               : isHidden === "4"
               ? handleUserinfo(values)
               : null;
           }}
         >
           {isHidden === "1" ? (
-            <FirstPage addImage={addImage} image={image} />
+            <FirstPage addImage={addImage} image={image} progress={progress} />
           ) : isHidden === "2" ? (
             <SecondPage/>
           ) : isHidden === "3" ? (

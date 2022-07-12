@@ -88,7 +88,7 @@ const JobRecruiterAppStack = () => {
                 />
               </View>
             ),
-            headerShown: false,
+            headerShown: true,
           }}
         />
         <Tabs.Screen

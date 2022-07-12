@@ -4,14 +4,13 @@ import Form from "../../Components/forms/form";
 import { validationSchemaUserDetails } from "../../Validation/InputValidation";
 import { createRecruiterDocument } from "../../Components/firebase/authentication/recruiterAuthentication/createRecruiterDocoment";
 import Colors from "../../utils/Colors";
-import * as ImagePicker from "expo-image-picker";
 import RecruiterDetails from '../../Components/JobRecruiterFormPage/recruitersDetails'
 import FormButton from "../../Components/forms/formButton";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CompanyRegisteration from "../../Components/JobRecruiterFormPage/CompanyRegisteration";
 import { setRecruiterDetails, setRecruiterStatus } from "../../redux/reducers/recruiterDetails";
-import { setCompanyDetails } from "../../redux/reducers/companyDetails";
+import firebase from "firebase/compat";
 import RecruiterVerification from "../../Components/JobRecruiterFormPage/recruiterVerification";
 
 const JobRecruiterDetails = () => {
@@ -119,6 +118,10 @@ const JobRecruiterDetails = () => {
             })
           )
         : console.log("Data not uploaded");
+          firebase.auth().currentUser.updateProfile({
+            displayName: `${CompaniesLegalName}`,
+            photoURL: coImage,
+          });
     } catch (error) {
       console.log("error it is", error);
     } finally {

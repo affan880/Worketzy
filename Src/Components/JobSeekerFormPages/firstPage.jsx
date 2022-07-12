@@ -6,10 +6,10 @@ import FormField from '../forms/formField';
 import FormButton from '../forms/formButton';
 import { Feather } from "@expo/vector-icons";
 
-const FirstPage = ({ addImage, image }) => {
+const FirstPage = ({ addImage, image, progress }) => {
   return (
     <View style={styles.FormContainer}>
-      <UserProfile addImage={addImage} width={150} height={150} image={image} />
+      <UserProfile addImage={addImage} width={170} height={170} image={image} progress={progress} />
       <FormField
         name="ValidFirstName"
         Name="First Name"

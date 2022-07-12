@@ -8,12 +8,19 @@ import FormField from '../forms/formField';
 import AppRadioButton from '../CustomComponents/appRadioButton';
 import { useSelector, useDispatch } from 'react-redux'
 import {setUserEmployeeStatus, setuserIsstudent, setuserDetails} from '../../redux/reducers/userDetails'
-
-
+import { useFonts } from 'expo-font';
+import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 const SecondPage = () => {
   const checked = useSelector((state) => state.userDetails.details.userEmployeeStatus);
   const student  = useSelector((state)=>state.userDetails.details.userIsstudent)
   const dispatch = useDispatch();
+  let [fontsLoaded, error] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
 
   const setChecked = (value) => {
     dispatch(setUserEmployeeStatus(value));
@@ -113,14 +120,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.primary,
-    },
-    ProfileText: {
-        fontSize: 20,
-        marginHorizontal:20,
-        marginVertical:30,
-        fontWeight:"bold",
-        fontStyle: 'normal',
-        color: Colors.RichBlack,
-        textAlign:'center'
-    }
+  },
+  ProfileText: {
+    fontSize: 20,
+    marginHorizontal: 20,
+    marginVertical: 30,
+    fontStyle: "normal",
+    color: Colors.textColor2,
+    textAlign: "center",
+    fontFamily: "Poppins_700Bold",
+  },
 });

@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AppSelectdropdown from '../CustomComponents/appSelectdropdown'
 import Colors from '../../utils/Colors';
 import FormField from '../forms/formField';
 import { Feather } from "@expo/vector-icons";
 import FormButton from '../forms/formButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {setuserEmploymentType,setuserDetails} from '../../redux/reducers/userDetails'
+import { setuserEmploymentType, setuserDetails } from '../../redux/reducers/userDetails'
+import { useFonts } from "expo-font";
+import { Raleway_400Regular_Italic } from "@expo-google-fonts/raleway";
+import { Montserrat_800ExtraBold_Italic } from '@expo-google-fonts/montserrat';
+import { Poppins_700Bold } from "@expo-google-fonts/poppins";
 const Thirdpage = () => {
   const dispatch = useDispatch();
   const setJob_Type = (val) => {
@@ -20,6 +24,15 @@ const Thirdpage = () => {
     "Contract",
     "Internship",
   ]
+    let [fontsLoaded, error] = useFonts({
+      Raleway_400Regular_Italic,
+      Montserrat_800ExtraBold_Italic,
+      Poppins_700Bold,
+    });
+    if (!fontsLoaded) {
+      return null;
+    }
+
 
   return (
     <View>
@@ -27,14 +40,26 @@ const Thirdpage = () => {
         style={{
           alignItems: "flex-start",
           paddingHorizontal: 10,
-          paddingVertical: 20,
+          paddingVertical: 50,
         }}
       >
-        <Text style={{ fontSize: 24, fontWeight: "bold", paddingBottom: 10 }}>
+        <Text
+          style={{
+            fontSize: 20,
+            paddingBottom: 10,
+            fontFamily: "Poppins_700Bold",
+            color: Colors.textColor2,
+          }}
+        >
           Job Preference
         </Text>
         <Text
-          style={{ fontSize: 14, fontWeight: "400", color: Colors.mediumGrey }}
+          style={{
+            fontSize: 14,
+            fontWeight: "400",
+            color: Colors.textColor2,
+            fontFamily: "Raleway_400Regular_Italic",
+          }}
         >
           What type of job are you looking for?{" "}
         </Text>

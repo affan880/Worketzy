@@ -1,24 +1,125 @@
-import * as React from "react";
-import { JanmTabBarNavigator, DotSize } from "rn-slick-bottom-tabs";
-import { Ionicons as Icon } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Entypo, Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import Home from '../Screens/Home/home';
 import Profile from '../Screens/Profile/profile';
-import Search from '../Screens/Search/search';
+import Chat from '../Screens/Chat/chatScreen';
 import Saved from '../Screens/Saved/Saved';
 import Colors from "../utils/Colors";
-const Tabs = JanmTabBarNavigator();
 
-const TabBarIcon = ({name,size,tintColor}) => {
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+const Tabs = createBottomTabNavigator();
+
+export default () => {
   return (
-    <Icon
-      name={name}
-      size={size ? size : 24}
-      color={tintColor}
-    />
+    <Tabs.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: "false",
+        tabBarShowLabel: false,
+        headerShown: "false",
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 15,
+          left: 10,
+          right: 10,
+          elevation: 0,
+          backroundColor: Colors.secondary,
+          borderRadius: 18,
+          height: 60,
+          ...styles.shadow,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="home"
+              size={24}
+              color="black"
+              style={{
+                color: focused ? Colors.secondary : Colors.secondaryShade,
+              }}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="Saved"
+        component={Saved}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <FontAwesome
+                name="bookmark"
+                size={24}
+                color="black"
+                style={{
+                  color: focused ? Colors.secondary : Colors.secondaryShade,
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="Chats"
+        component={Chat}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Ionicons
+                name="ios-chatbubbles-sharp"
+                size={24}
+                color="black"
+                style={{
+                  color: focused ? Colors.secondary : Colors.secondaryShade,
+                }}
+              />
+            </View>
+          ),
+          headerShown: true,
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Ionicons
+                name="md-person-circle-sharp"
+                size={24}
+                color="black"
+                style={{
+                  color: focused ? Colors.secondary : Colors.secondaryShade,
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
+        }}
+      />
+    </Tabs.Navigator>
   );
 };
 
-export default () => (
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#7F5DF0",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+});
+{/*
+  export default () => (
   <Tabs.Navigator
     backBehavior="history"
     screenOptions={{
@@ -86,3 +187,4 @@ export default () => (
     />
   </Tabs.Navigator>
 );
+    */}

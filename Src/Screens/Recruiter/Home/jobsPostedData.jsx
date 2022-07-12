@@ -30,7 +30,8 @@ const JobsPostedData = () => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={loadUserData} />
           }
-                renderItem={({ item }) => {
+          renderItem={({ item }) => {
+                  console.log(item)
                     const URL = `https://worketzy.herokuapp.com/api/jobs/delete/${item.recruiterId}/${item.jobsUniqueId}`;
             return (
               <View

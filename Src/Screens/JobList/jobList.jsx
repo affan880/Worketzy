@@ -1,50 +1,144 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, FlatList, Animated, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import SafeView from '../../Components/CustomComponents/safeView';
+import Colors from '../../utils/Colors';
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useChatContext } from 'stream-chat-expo';
+import { useNavigation } from '@react-navigation/native';
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
-const JobList = () => {
-      const CardCarouselDetails = [
-        {
-          id: 1,
-          CardTitle: "Popular Jobs",
-          image:
-            "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-          description: "lorem epsium tnen jpojpsd joined",
-          jobList: [
-            {
-              id: 1,
-              image:
-                "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-              description: "lorem epsium tnen jpojpsd joined",
-              jobTitle: "UI/UX Designer",
-              jobSalary: "$100000",
-            },
-            {
-              id: 2,
-              image:
-                "https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-              description: "lorem epsium tnen dfdssddfdsf joined",
-              jobTitle: "Web developer",
-              jobSalary: "$300000",
-            },
-            {
-              id: 3,
-              image:
-                "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80",
-              description: "lorem epsium tnen adfsdfsfsf joined",
-              jobTitle: "App developer",
-              jobSalary: "$400000",
-            },
-          ],
-        },
-      ];
+const JobList = ({ route }) => {
+  const navigation = useNavigation();
+  const {client} = useChatContext();
+  const Data = route.params;
+  const JobsData = Data.item;
+  const userId = Data.userId;
+  const recruiterId = JobsData.recruiterId;
+  console.log("userId", userId);
+  console.log("recruiterId", JobsData.recruiterId);
+  const CreateChannel = async () => {
+    const channel = client.channel("messaging", {
+      members: [recruiterId, userId],
+    });
+    await channel.watch();
+    navigation.navigate("ChattingScreen", { channel });
+  }
+  const Apply = () => {
+    CreateChannel();
+  };
   return (
-    <SafeView>
-      <Text>jobList</Text>
-    </SafeView>
-  )
+    <ScrollView>
+      <View style={{ height: height, width: width, alignItems: "center" }}>
+        <View style={styles.Card}>
+          <Image
+            source={{
+              uri: JobsData.jobInfo.image,
+            }}
+            style={{
+              width: width * 0.9,
+              height: 220,
+              marginTop: 20,
+              borderRadius: 15,
+            }}
+          />
+          <Text style={styles.jobTitle}>{JobsData.jobInfo.jobTitle}</Text>
+          <Text style={styles.Description}>
+            {JobsData.jobInfo.jobDescription}
+          </Text>
+          <View style={styles.requiredSkills}>
+            <Text style={styles.requiredSkillsText}>Required Skills</Text>
+            <Text style={styles.requiredSkillsDisc}>
+              {JobsData.jobInfo.requiredSkills}
+            </Text>
+          </View>
+          <View style={styles.requiredSkills}>
+            <Text style={styles.requiredSkillsText}>Job Type</Text>
+            <Text style={styles.requiredSkillsDisc}>
+              {JobsData.jobInfo.jobType}
+            </Text>
+          </View>
+          <View style={styles.requiredSkills}>
+            <Text style={styles.requiredSkillsText}>Job Requirements</Text>
+            <Text style={styles.requiredSkillsDisc}>
+              {JobsData.jobInfo.jobRequirements}
+            </Text>
+          </View>
+          <View style={styles.requiredSkills}>
+            <Text style={styles.requiredSkillsText}>Job Location</Text>
+            <Text style={styles.requiredSkillsDisc}>
+              {JobsData.jobInfo.jobLocation}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.ApplyBtn}
+            onPress={() => {
+              Apply();
+            }}
+          >
+            <Text>Apply Now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
+  
+  export default JobList
+  
+  const styles = StyleSheet.create({
+    Container: {
+      width: width,
+      height: height,
+    },
+    Card: {
+    borderRadius: 15,
+    width: width,
+    height: height,
+    backgroundColor: Colors.white,
+    alignItems: "center",
+  },
+  jobTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.secondary,
+    marginTop: 20,
+  },
+  Description: {
+    fontSize: 16,
+    color: Colors.primary,
+    margin: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: "300",
+  },
+  requiredSkills: {
+    textAlign: "left",
+    paddingTop: 10,
+    fontSize: 14,
+  },
+  requiredSkillsText: {
+    fontSize: 16,
+    color: Colors.secondary,
+  },
+  requiredSkillsDisc: {
+    fontSize: 16,
+    color: Colors.primary,
+    margin: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: "300",
+  },
+  ApplyBtn: {
+    width: "90%",
+    height: "7%",
+    backgroundColor: Colors.secondary,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 20,
 
-export default JobList
-
-const styles = StyleSheet.create({})
+  }
+});
