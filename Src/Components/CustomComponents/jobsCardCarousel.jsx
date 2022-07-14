@@ -13,22 +13,27 @@ import React from "react";
 import SafeView from "./safeView";
 import Colors from "../../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
+import firebase from "firebase/compat";
+import { useSelector } from "react-redux";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 const cardCarousel = ({ name, joblist }) => {
   const navigation = useNavigation();
+  const userId = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
         <Text
           style={{
             fontWeight: "600",
+            color: Colors.white,
+            letterSpacing: 1,
           }}
         >
           {name}
         </Text>
-        <TouchableOpacity onPress={()=>{navigation.navigate("JobList")}}>
-          <Text style={{ fontWeight: "400", color: Colors.mediumGrey }}>
+        <TouchableOpacity onPress={()=> navigation.navigate('PersonalisedJobList', {joblist})}  >
+          <Text style={{ fontWeight: "400", color: Colors.white }}>
             See all
           </Text>
         </TouchableOpacity>
@@ -40,28 +45,33 @@ const cardCarousel = ({ name, joblist }) => {
         data={joblist}
         renderItem={({ item }) => {
           return (
-            <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("JobList", { item, userId });
+              }}
+            >
               <View
                 style={{
                   marginHorizontal: 20,
                   height: 300,
                   width: 300,
+                  
                 }}
               >
                 <View style={styles.jobCardImg}>
                   <Image
                     source={{
-                      uri: item.image,
+                      uri: item.jobInfo.image,
                     }}
                     style={styles.image}
                   />
                 </View>
                 <View style={styles.detailsCard}>
                   <Text style={styles.jobTitleText}>{item.jobTitle}</Text>
-                  <Text style={styles.jobSalary}>{item.jobSalary}</Text>
+                  <Text style={styles.jobSalary}>{item.jobInfo.jobType}</Text>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         }}
       ></Animated.FlatList>
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
   detailsCard: {
     width: "100%",
     height: 110,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.textColor2,
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
   },

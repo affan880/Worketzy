@@ -101,7 +101,7 @@ const JobRecruiterAppStack = () => {
                 size={30}
                 color="black"
                 style={{
-                  color: !focused ? Colors.secondaryShade : Colors.secondary,
+                  color: !focused ? Colors.secondaryShade : Colors.white,
                 }}
               />
             ),

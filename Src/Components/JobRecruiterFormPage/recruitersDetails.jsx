@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '../../utils/Colors'
 import UserProfile from "../ProfileData/UserProfile";
@@ -11,7 +11,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import uploadImage from "../firebase/authentication/UploadImage";
 const CompanyDetails = () => {
   const CurrentUserID = useSelector((state) => state.currentUser.user);
-   const image = useSelector((state) => state.currentUser.userImage);
+  const image = useSelector((state) => state.currentUser.userImage);
+  const [progress, setProgress] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
     getMyObject();
@@ -24,12 +25,19 @@ const CompanyDetails = () => {
   const addImage = () => {
     const filePath = `CompanyDetails/${CurrentUserID.uid}/Recruiter`;
     const set = setUserImage;
-    uploadImage(filePath,dispatch, set);
+    uploadImage(filePath,dispatch, set, progress, setProgress);
   };
   return (
     <View style={styles.Container}>
       <Text style={styles.headerText}>My Recruiter Profile</Text>
-      <UserProfile addImage={addImage} width={150} height={150} name="Recruiter" image={image} />
+      <UserProfile
+        addImage={addImage}
+        width={170}
+        height={170}
+        name="Recruiter"
+        image={image}
+        progress={progress}
+      />
       <FormField
         name="ValidFirstName"
         Name="First Name"

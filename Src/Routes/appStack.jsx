@@ -10,13 +10,14 @@ import { OverlayProvider, Chat } from "stream-chat-expo";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { connectUserStream } from "../Functions/connectUserStream";
 import Spinner from "../Components/CustomComponents/spinner";
-const Stack = createNativeStackNavigator();
+import PersonalisedJobList from "../Screens/JobList/personalisedJobList";
 
+const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
   const [loading , setLoading] = useState(true);
   const auth = getAuth();
-  const client = StreamChat.getInstance("zq34cq75mqdv");
+  const client = StreamChat.getInstance("fx68bnb4w8v2");
 
   onAuthStateChanged(auth, (authUser) => {
     authUser && loading
@@ -47,6 +48,7 @@ export default function AppStack() {
         <Stack.Screen name="Chats" component={Chats} options={{headerShown: true}} />
         <Stack.Screen name="ChattingScreen" component={ChattingScreen} options={{headerShown: false}} />
         <Stack.Screen name="JobList" component={JobList} />
+        <Stack.Screen name="PersonalisedJobList" component={PersonalisedJobList} />
           </Stack.Navigator>
         )
       }

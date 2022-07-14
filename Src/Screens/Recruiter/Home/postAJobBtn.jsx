@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, StatusBar } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../../utils/Colors';
@@ -8,6 +8,7 @@ const PostAJobBtn = () => {
     const navigation = useNavigation(); 
   return (
     <View>
+      <StatusBar translucent backgroundColor={Colors.primary} />
       <View
         style={{
           justifyContent: "center",
@@ -28,6 +29,7 @@ const PostAJobBtn = () => {
             <Text style={styles.navigationBtnText}>Post a Jobs</Text>
           </TouchableOpacity>
         </View>
+        <StatusBar translucent backgroundColor={Colors.primary} />
       </View>
     </View>
   );

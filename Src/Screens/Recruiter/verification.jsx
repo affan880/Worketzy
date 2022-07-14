@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     RefreshButtonText: {
-        color: Colors.secondaryShade,
+        color: Colors.white,
         fontSize: 18,
         fontWeight: "500",
     }

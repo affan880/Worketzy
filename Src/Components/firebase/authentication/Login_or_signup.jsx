@@ -13,7 +13,7 @@ import SafeView from "../../../Components/CustomComponents/safeView";
 import Spinner from "../../../Components/CustomComponents/spinner";
 import Colors from "../../../utils/Colors";
 import { setApplicationType } from "../../../redux/reducers/userDetails";
-import { setUser } from "../../../redux/reducers/currentUser";
+import { setCompaniesInformation, setJobRecruitersInformation, setJobSeekersInformation , setUser } from "../../../redux/reducers/currentUser";
 import { setUidForJobInfo } from "../../../redux/reducers/jobInfo";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "firebase/compat";
@@ -128,12 +128,35 @@ export default function LoginScreen({Screen}) {
     
     }
     finally {
+      const userID = firebase.auth().currentUser.uid;
       dispatch(setUser({
-        uid: firebase.auth().currentUser.uid,
+        uid: userID,
       }));
-      dispatch(setUidForJobInfo(firebase.auth().currentUser.uid));
-      
+      dispatch(setUidForJobInfo(userID));
       storeType(ApplicationType)
+      console.log(ApplicationType);
+        const userRef = await firebase.firestore().collection(`${ApplicationType}`).doc(userID).get();
+        const userData = userRef.data();
+        console.log(userData);
+        if (`${ApplicationType}` === "JobSeekers") {
+          await AsyncStorage.setItem("@JobSeekersInformation", JSON.stringify(userData))
+          dispatch(setJobSeekersInformation(userData))
+        }
+        else {
+          const companyref = await firebase
+            .firestore()
+            .collection("Companies")
+            .doc(userID)
+            .get();
+          const CompanyData = companyref.data();
+          await AsyncStorage.setItem(
+            "@JobRecruitersInformation",
+            JSON.stringify(userData)
+          );
+          dispatch(setJobRecruitersInformation(userData))
+          await AsyncStorage.setItem("@CompaniesInformation", JSON.stringify(CompanyData));
+          dispatch(setCompaniesInformation(CompanyData))
+        }
       setVerifyingCode(false);
     }
   }

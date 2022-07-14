@@ -1,133 +1,72 @@
 import {
-  Animated,
   StyleSheet,
-  Text,
   View,
-  FlatList,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
 } from "react-native";
-import React from "react";
-import SafeView from "./safeView";
-import Colors from "../../utils/Colors";
-const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
+import React, { useState, useEffect } from "react";
 import JobCardCarousel from "./jobsCardCarousel";
+import { getMostViewesJobs, mostApplied, recommendedJobs } from "../../Functions/getData";
+import firebase from "firebase/compat";
+import { useSelector } from "react-redux";
 const JobCategories = () => {
-  const CardCarouselDetails = [
-    {
-      id: 1,
-      CardTitle: "Popular Jobs",
-      image:
-        "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-      description: "lorem epsium tnen jpojpsd joined",
-      jobList: [
-        {
-          id: 1,
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/worketzy-eecf2.appspot.com/o/images%2FDesigner.png?alt=media&token=b9590c89-1cac-4776-b098-db5ff3253cac",
-          description: "lorem epsium tnen jpojpsd joined",
-          jobTitle: "UI/UX Designer",
-          jobSalary: "$100000",
-        },
-        {
-          id: 2,
-          image:
-            "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-          description: "lorem epsium tnen dfdssddfdsf joined",
-          jobTitle: "Web developer",
-          jobSalary: "$300000",
-        },
-        {
-          id: 3,
-          image:
-            "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80",
-          description: "lorem epsium tnen adfsdfsfsf joined",
-          jobTitle: "App developer",
-          jobSalary: "$400000",
-        },
-      ],
-    },
-    {
-      id: 2,
-      CardTitle: "Recommended Jobs",
-      image:
-        "https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      description: "lorem epsium tnen dfdssddfdsf joined",
-      jobList: [
-        {
-          id: 1,
-          image:
-            "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-          description: "lorem epsium tnen jpojpsd joined",
-          jobTitle: "UI/UX Designer",
-          jobSalary: "$100000",
-        },
-        {
-          id: 2,
-          image:
-            "https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-          description: "lorem epsium tnen dfdssddfdsf joined",
-          jobTitle: "Web developer",
-          jobSalary: "$300000",
-        },
-        {
-          id: 3,
-          image:
-            "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80",
-          description: "lorem epsium tnen adfsdfsfsf joined",
-          jobTitle: "App developer",
-          jobSalary: "$400000",
-        },
-      ],
-    },
-    {
-      id: 3,
-      CardTitle: "New Jobs",
-      image:
-        "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80",
-      description: "lorem epsium tnen adfsdfsfsf joined",
-      jobList: [
-        {
-          id: 1,
-          image:
-            "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-          description: "lorem epsium tnen jpojpsd joined",
-          jobTitle: "UI/UX Designer",
-          jobSalary: "$100000",
-        },
-        {
-          id: 2,
-          image:
-            "https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-          description: "lorem epsium tnen dfdssddfdsf joined",
-          jobTitle: "Web developer",
-          jobSalary: "$300000",
-        },
-        {
-          id: 3,
-          image:
-            "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80",
-          description: "lorem epsium tnen adfsdfsfsf joined",
-          jobTitle: "App developer",
-          jobSalary: "$400000",
-        },
-      ],
-    },
-  ];
+  const [userPreferedJobs, setUserPreferedJobs] = useState(null);
+  const [userRecommendedJobs, setUserRecommendedJobs] = useState();
+  const [userRecommendedJobsState, setUserRecommendedJobsState] = useState(false);
+  const [mostViewedJobs, setMostViewedJobs] = useState();
+  const [mostViewedJobsState, setMostViewedJobsState] = useState(false);
+  const [mostAppliedJobs, setMostAppliedJobs] = useState();
+  const [mostAppliedJobsState, setMostAppliedJobsState] = useState(false);
+
+  const CurrentUserID = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
+  const userExpectedRoles = async () => {
+    const userRef = firebase
+      .firestore()
+      .collection("JobSeekers")
+      .doc(CurrentUserID);
+    const snapshot = await userRef.get();
+    const status = snapshot.data().userJobExpectedRole;
+    setUserPreferedJobs(status);
+  }
+  useEffect(() => { 
+    CurrentUserID ? userExpectedRoles() : null;
+  }, [])
+  
+  userPreferedJobs !== null && !userRecommendedJobsState
+    ? recommendedJobs(
+        userPreferedJobs,
+        userRecommendedJobs,
+        setUserRecommendedJobs,
+        setUserRecommendedJobsState
+      )
+    : null;
+ 
+  useEffect(() => {
+    getMostViewesJobs(setMostViewedJobs, setMostViewedJobsState);
+    mostApplied(setMostAppliedJobs, setMostAppliedJobsState);
+  }, [])
+  
+
   return (
-      <View style={{marginTop:100, marginBottom:180}} >
-          {
-              CardCarouselDetails.map((item, index) => { 
-                  return (
-                    <View key={Math.random()} > 
-                        <JobCardCarousel name ={item.CardTitle} joblist={item.jobList} />
-                    </View>
-                  )
-              })
-          }
+    <View style={{ marginTop: 100, marginBottom: 200 }}>
+      {mostAppliedJobsState ? (
+        <View key={Math.random()}>
+          <JobCardCarousel
+            name={"Currently Trending"}
+            joblist={mostAppliedJobs}
+          />
+        </View>
+      ) : null}
+      {mostViewedJobsState ? (
+        <View key={Math.random()}>
+          <JobCardCarousel name={"Most Viewed Jobs"} joblist={mostViewedJobs} />
+        </View>
+      ) : null}
+      {
+        userRecommendedJobsState ? (
+          <View key={Math.random()}>
+            <JobCardCarousel name={"Jobs best suited for you"} joblist={userRecommendedJobs} />
+        </View>
+      ) : null}
+      
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import { StyleSheet,View} from "react-native";
+import { StatusBar, StyleSheet,View} from "react-native";
 import React, { useEffect, useState } from "react";
 import { ChannelList } from "stream-chat-expo";
 import SafeView from "../../../Components/CustomComponents/safeView";
@@ -7,6 +7,7 @@ import { setUser } from "../../../redux/reducers/currentUser";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Spinner from "../../../Components/CustomComponents/spinner";
+import Colors from "../../../utils/Colors";
 const ChatScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const ChatScreen = () => {
       navigation.navigate("ChattingScreen", { channel });
     };
   return (
-    <View style={{flex:1}} >
+    <View style={{ flex: 1, backgroundColor: Colors.primary }} >
+      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
       {userId ? (
         <ChannelList
           onSelect={(channel) => ChannelPressed(channel)}

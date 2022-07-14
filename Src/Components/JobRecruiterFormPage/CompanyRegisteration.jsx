@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import FormField from '../forms/formField'
 import UserProfile from '../ProfileData/UserProfile'
 import uploadImage from '../firebase/authentication/UploadImage'
@@ -10,21 +10,22 @@ import { setCompanyLogo } from '../../redux/reducers/currentUser';
 const CompanyRegisteration = () => {
   const CurrentUserID = useSelector((state) => state.currentUser.user);
   const image = useSelector((state) => state.currentUser.companyLogo);
+  const [progress, setProgress] = useState();
     const dispatch = useDispatch();
    const addImage = () => {
      const filePath = `CompanyDetails/${CurrentUserID.uid}/CompanyLogo`;
      const set = setCompanyLogo;
-     uploadImage(filePath, dispatch, set);
+     uploadImage(filePath, dispatch, set, progress, setProgress);
    };
   return (
     <View style={{ marginTop: 40 }}>
       <Text style={styles.headerText}>Register your company</Text>
-      <UserProfile addImage={addImage} width={150} height={150} image = {image} />
+      <UserProfile addImage={addImage} width={170} height={170} image = {image} progress={progress} />
       <FormField
         name="CompaniesLegalName"
         Name="Company Legal Name"
         leftIcon="rename-box"
-        placeholder="Worketzy -------"
+        placeholder="Enter your company legal name"
         width={"95%"}
       />
       <FormField
@@ -45,7 +46,7 @@ const CompanyRegisteration = () => {
         name="CompanyLocation"
         Name="Company Location"
         leftIcon="rename-box"
-        placeholder="545656 hehehehe, hehehcity, Hehe"
+        placeholder="e.g. New York"
         width={"95%"}
       />
       <FormField
@@ -88,9 +89,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 28,
     paddingBottom:20,
-    textAlign:'left',
+    textAlign:'center',
     fontWeight: "800",
     color: Colors.secondary,
-    justifyContent: "space-evenly",
+    justifyContent: "center",
   },
 });

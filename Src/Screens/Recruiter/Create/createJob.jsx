@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native'
 import React,{useEffect, useState} from 'react'
 import Colors from '../../../utils/Colors';
 import SafeView from '../../../Components/CustomComponents/safeView';
@@ -7,7 +7,6 @@ import FormField from '../../../Components/forms/formField';
 import ImageForBanner from '../../../Components/CustomComponents/imageForBanner'
 import { useSelector, useDispatch } from 'react-redux';
 import AppSelectdropdown from '../../../Components/CustomComponents/appSelectdropdown';
-import firebase from 'firebase/compat';
 import uploadImage from '../../../Components/firebase/authentication/UploadImage';
 import { setBanner, setJobInfoTitle, setJobType, setCreateJobInfo } from '../../../redux/reducers/jobInfo';
 import FormButton from '../../../Components/forms/formButton';
@@ -15,7 +14,7 @@ import { post } from '../../../Functions/postRequest';
 import { useNavigation } from '@react-navigation/native';
 const CreateJob = () => {
   const navigation = useNavigation();
-  const userId = useSelector((state) => state.currentUser.user.uid);
+  const userId = useSelector((state) => state.currentUser.JobRecruitersInformation.userUniqueId);
   const jobInfo = useSelector((state) => state.jobInfo.createJobInfo);
   const [JobTitles, setJobTitles] = useState(Titles);
   const [progress, setProgress] = useState(false);
@@ -65,7 +64,8 @@ const CreateJob = () => {
         JobDescription: "",
         RequiredSkills: "",
         JobRequirements: "",
-        JobLocation:""
+        JobLocation: "",
+        NumberOfOpenings:""
       };
 
     const setJob_Titles = (val) => {
@@ -83,28 +83,43 @@ const CreateJob = () => {
       "Internship",
   ];
   const addImage = () => {
-    const filePath = `Jobs/${firebase.auth().currentUser.uid}/${Math.random() * 10}`;
+    const filePath = `Jobs/${userId}/${Math.random() * 10}`;
     const set = setBanner;
     uploadImage(filePath, dispatch, set, progress, setProgress);
     dispatch(setBanner(filePath));
   };
   const submit = (values) => {
-    const { JobDescription, RequiredSkills, JobRequirements, JobLocation } = values;
+    const {
+      JobDescription,
+      RequiredSkills,
+      JobRequirements,
+      JobLocation,
+      NumberOfOpenings
+    } = values;
     const data = {
-      recruiterId: `${userId}`,
-      jobsUniqueId: `${Math.round(Math.random() * 1000000000)}`,
+      recruiterId: userId,
+      jobsUniqueId: Math.round(Math.random() * 1000000000),
       jobTitle: `${jobInfo.JobTitle}`,
       jobInfo: {
-        image:`${jobInfo.ImageForBanner}`,
+        image: `${jobInfo.ImageForBanner}`,
         jobTitle: `${jobInfo.JobTitle}`,
         jobType: `${jobInfo.JobType}`,
-        jobDescription:`${JobDescription}`,
+        jobDescription: `${JobDescription}`,
         requiredSkills: `${RequiredSkills}`,
         jobRequirements: `${JobRequirements}`,
         jobLocation: `${JobLocation}`,
+        numberofopenings: `${NumberOfOpenings}`,
+        numberofViews: 0,
+        points: 0,
+        numberofPeopleRated: 0,
+        peopleApplied: {},
+        reviews: {
+          jobSeekerID: "",
+          jobSeekerName: "",
+        },
       },
     };
-    const url = "https://worketzy.herokuapp.com/api/jobs/";
+    const url = "https://worketzy.herokuapp.com/api/jobs";
     const msg = "Job Created Successfully";
     post(data, url, msg, navigation);
     dispatch(
@@ -119,11 +134,17 @@ const CreateJob = () => {
         JobLocation: "",
       })
     );
-  }
+    }
   return (
     <SafeView
-      style={{ backgroundColor: Colors.primary, width: "100%", height: "100%" }}
+      style={{
+        backgroundColor: Colors.primary,
+        width: "100%",
+        height: "100%",
+        marginTop: 10,
+      }}
     >
+      <StatusBar translucent backgroundColor={Colors.primary} />
       <ScrollView>
         <Text style={styles.HeaderText}>Post a Full Time Job</Text>
         <ImageForBanner
@@ -131,7 +152,7 @@ const CreateJob = () => {
           width={"95%"}
           height={180}
           addImage={addImage}
-          progress ={progress}
+          progress={progress}
         />
         <View
           style={{
@@ -182,6 +203,13 @@ const CreateJob = () => {
               width={"95%"}
             />
             <FormField
+              name="NumberOfOpenings"
+              Name="Number Of Openings"
+              leftIcon="rename-box"
+              placeholder="Please fill in requirements"
+              width={"95%"}
+            />
+            <FormField
               name="JobLocation"
               Name="Job Location"
               leftIcon="rename-box"
@@ -207,7 +235,7 @@ const CreateJob = () => {
         fontSize: 24,
         padding: 20,
         paddingTop:30,
-        color: Colors.secondary,
+        color: Colors.white,
         fontWeight: 'bold',
         textDecorationLine: 'underline',
       }

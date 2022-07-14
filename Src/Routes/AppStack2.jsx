@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function AppStack2() {
     const [loading, setLoading] = useState(true);
     const auth = getAuth();
-    const client = StreamChat.getInstance("zq34cq75mqdv");
+    const client = StreamChat.getInstance("fx68bnb4w8v2");
 
     onAuthStateChanged(auth, (authUser) => {
       authUser && loading

@@ -11,17 +11,12 @@ import AppStack2 from '../../../Routes/AppStack2'
 const VerificationPage = () => {
     const dispatch = useDispatch()
     const [isVerified, setIsVerified] = useState(false)
-    const CurrentUserID = useSelector((state) => state.currentUser.user);
+  const CurrentUserID = useSelector((state) => state.currentUser.user);
+  const uid = useSelector((state) => state.currentUser.JobRecruitersInformation.userUniqueId);
     useEffect(() => { 
-      LoadUserId();
-      // loadVerificationStatus();
+      LoadUser();
+      verification();
     }, [])
-    const loadVerificationStatus = async () => {
-      const userRef = firebase.firestore().collection("Companies").doc(CurrentUserID.uid);
-      const snapshot = await userRef.get();
-      const status = snapshot.data().Verified;
-      setIsVerified(status)
-    }
     const setVerified = async (status) => { 
         try {
             await AsyncStorage.setItem('@isVerified', JSON.stringify(status));
@@ -31,13 +26,16 @@ const VerificationPage = () => {
         }
     }
     const verification = async () => { 
-       const userRef = firebase.firestore().collection("Companies").doc(CurrentUserID.uid);
+       const userRef = firebase
+         .firestore()
+         .collection("Companies")
+         .doc(uid || CurrentUserID.uid);
         const snapshot = await userRef.get();
-        const status = snapshot.data().Verified ;
+        const status = snapshot.data().Verified;
         setIsVerified(status)
         setVerified(status)
     }
-    const LoadUserId = async () => {
+    const LoadUser = async () => {
         try {
           const user = JSON.parse(await AsyncStorage.getItem("@CurrentUser"));
             user !== null ? dispatch(setUser(user)) : null;

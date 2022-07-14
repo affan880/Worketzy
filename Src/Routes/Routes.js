@@ -93,8 +93,7 @@ const storeUser = async (val) => {
 };
 const storeRecruiter = async (RecVal) => {
   try {
-    await AsyncStorage.setItem("@RecruitersDetails", JSON.stringify(RecVal));
-   
+    await AsyncStorage.setItem("@RecruitersDetails", JSON.stringify(RecVal));   
   } catch (e) {
     console.log("Error saving data storeId");
   }
@@ -131,9 +130,9 @@ const storeRecruiter = async (RecVal) => {
     }
   } 
   const loadType = async () => { 
+    const ApplicationType = await AsyncStorage.getItem("@ApplicationType");
     try {
       setLoading1(true)
-      const ApplicationType = await AsyncStorage.getItem("@ApplicationType");
       ApplicationType !== null
         ? dispatch(setApplicationType(ApplicationType))
         : null;
@@ -144,7 +143,6 @@ const storeRecruiter = async (RecVal) => {
       console.log("loadType" + err)
     }
     finally { 
-      const ApplicationType = await AsyncStorage.getItem("@ApplicationType");
       ApplicationType === null ? setLoading1(false) : null;
     }
   }

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, StatusBar } from "react-native";
 import React, { useState, useEffect } from "react";
 import Form from "../../Components/forms/form";
 import { validationSchemaUserDetails } from "../../Validation/InputValidation";
@@ -16,7 +16,7 @@ import RecruiterVerification from "../../Components/JobRecruiterFormPage/recruit
 const JobRecruiterDetails = () => {
   const uid = useSelector((state) => state.recruiterDetails.recruiterStatus.id);
   const image = useSelector((state) => state.currentUser.userImage);
-  const coImage = useSelector((state) => state.companyDetails.companyLogo);
+  const CompaniesLogo = useSelector((state) => state.currentUser.companyLogo);
   const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState("1");
   useEffect(() => {
@@ -90,7 +90,7 @@ const JobRecruiterDetails = () => {
         Email: ValidEmail,
         CompanyName: CompanyName,
         Designation: RecruitersDesignation,
-        userUniqueId: "",
+        userUniqueId: uid,
         userImage: image,
         Verified: false,
       };
@@ -100,7 +100,9 @@ const JobRecruiterDetails = () => {
         Industry: Industry,
         CompanyLocation: CompanyLocation,
         CompanyWebsite: CompanyWebsite,
-        Verified: false
+        uniqueId: uid,
+        Logo: CompaniesLogo,
+        Verified: false,
       };
       const uploaded = createRecruiterDocument(
         uid,
@@ -109,7 +111,6 @@ const JobRecruiterDetails = () => {
       );
       dispatch(setRecruiterDetails(recruiterDetails));
       storeDetails(recruiterDetails);
-      // uploadImage(image, setImageUpload, setLoading,user, uid);
       uploaded
         ? dispatch(
             setRecruiterStatus({
@@ -133,6 +134,7 @@ const JobRecruiterDetails = () => {
   }
   return (
     <ScrollView style={{ backgroundColor: Colors.primary }}>
+      <StatusBar translucent backgroundColor={Colors.primary} />
       <View style={styles.FormContainer}>
         <Form
           initialValues={recruiterAndCompanyDetails}
@@ -141,19 +143,19 @@ const JobRecruiterDetails = () => {
             isHidden === "1"
               ? setIsHidden("2")
               : isHidden === "2"
-                ? setIsHidden("3") 
-                : isHidden === "3"
-                  ? handleUserinfo(values) : null
+              ? setIsHidden("3")
+              : isHidden === "3"
+              ? handleUserinfo(values)
+              : null;
           }}
         >
           {isHidden === "1" ? (
             <RecruiterDetails />
           ) : isHidden === "2" ? (
             <CompanyRegisteration />
-            ) : isHidden === "3" ? (
-              <RecruiterVerification/>
-          )
-          :(
+          ) : isHidden === "3" ? (
+            <RecruiterVerification />
+          ) : (
             <FormButton title={"Submit"} color={Colors.secondary} />
           )}
         </Form>

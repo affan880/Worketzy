@@ -5,8 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SafeView from "../../Components/CustomComponents/safeView";
 import Colors from "../../utils/Colors";
 import { Dimensions } from "react-native";
-const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
 import { FontAwesome } from "@expo/vector-icons";
 import CardCarousel from "../../Components/CustomComponents/cardCarousel";
 import JobCategories from "../../Components/CustomComponents/jobCategories";
@@ -14,11 +12,21 @@ import { useFonts } from "expo-font";
 import { Raleway_400Regular_Italic } from "@expo-google-fonts/raleway";
 import { Montserrat_900Black } from "@expo-google-fonts/montserrat";
 import { Poppins_700Bold } from "@expo-google-fonts/poppins";
-import { setUser, setDetails } from "../../redux/reducers/userDetails";
-import Spinner from "../../Components/CustomComponents/spinner";
-import { useChatContext } from "stream-chat-expo";
+import { setJobSeekersInformation } from "../../redux/reducers/currentUser";
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+ 
 const Home = () => {
   const dispatch = useDispatch();
+  const loadCurrentUser = async () => {
+    const user = await AsyncStorage.getItem("@JobSeekersInformation");
+    const data = JSON.parse(user);
+    dispatch(setJobSeekersInformation(data));
+  };
+  useEffect(() => { 
+    loadCurrentUser(); 
+  })
   const [loading, setLoading] = useState(false);  
     let [fontsLoaded, error] = useFonts({
         Raleway_400Regular_Italic,

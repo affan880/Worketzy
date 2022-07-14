@@ -1,8 +1,5 @@
 import { View, Text,Button, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { setUserLastName, setuserDetails, setDetails } from '../../redux/reducers/userDetails'
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SafeView from '../../Components/CustomComponents/safeView';
 import UserProfile from '../../Components/ProfileData/UserProfile';
 import Colors from '../../utils/Colors';
