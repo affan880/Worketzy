@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
 import {Channel, MessageInput, MessageList} from 'stream-chat-expo';
 import SafeView from '../CustomComponents/safeView';
@@ -11,7 +11,6 @@ const ChattingScreen = (props) => {
   const { params: { channel } } = route;
   return (
     <SafeView style={{ flex: 1 }}>
-      <StatusBar />
       <Channel channel={channel} keyboardVerticalOffset>
         <MessageList />
         <MessageInput />

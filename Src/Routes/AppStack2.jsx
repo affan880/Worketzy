@@ -32,8 +32,8 @@ export default function AppStack2() {
         options={{
           headerShown: false,
           navigationBarColor: Colors.secondary,
-          statusBarColor: Colors.secondaryShade,
-          statusBarStyle: Colors.secondaryShade,
+          statusBarColor: Colors.primary,
+          statusBarStyle: Colors.primary,
           keyboardHidesTabBar: true,
         }}
       />

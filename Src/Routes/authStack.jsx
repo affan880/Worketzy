@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login_Sign_up_Screen from "../Screens/Login_Sign_up_Screens/Login_Sign_up_Screen";
 import Login_Jseeker from "../Screens/Login_Sign_up_Screens/Login_Jseeker/Login_Jseeker";
 import Login_Recruiter from "../Screens/Login_Sign_up_Screens/Login_Recruiter/Login_Recruiter";
+import Colors from "../utils/Colors";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,8 @@ export default function AuthStack() {
         animation: "slide_from_right",
         headerShown: false,
         tabBarHideOnKeyboard: "true",
+        statusBarColor: Colors.primary,
+        statusBarStyle: Colors.primary,
       }}
     >
       <Stack.Screen name="Welcome" component={Login_Sign_up_Screen} />

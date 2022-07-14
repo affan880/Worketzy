@@ -11,7 +11,11 @@ export default function JobRecruiterFormStack() {
   return (
     <Stack.Navigator
       initialRouteName={"Details"}
-      screenOptions={{ tabBarHideOnKeyboard: "true" }}
+      screenOptions={{
+        tabBarHideOnKeyboard: "true",
+        statusBarColor: Colors.primary,
+        statusBarStyle: Colors.primary,
+      }}
     >
       <Stack.Screen
         name="Details"

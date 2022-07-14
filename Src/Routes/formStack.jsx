@@ -9,6 +9,8 @@ export default function FormStack() {
       screenOptions={{
         headerTitleAlign: "center",
         tabBarHideOnKeyboard: "true",
+        statusBarColor: Colors.primary,
+        statusBarStyle: Colors.primary,
       }}
       initialRouteName={"Details"}
     >

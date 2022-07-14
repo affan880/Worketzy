@@ -29,6 +29,7 @@ const CompanyDetails = () => {
   };
   return (
     <View style={styles.Container}>
+      <StatusBar translucent backgroundColor={Colors.primary} />
       <Text style={styles.headerText}>My Recruiter Profile</Text>
       <UserProfile
         addImage={addImage}
