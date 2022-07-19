@@ -1,35 +1,32 @@
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-  Image
-} from "react-native";
-import React from "react";
-import SafeView from "../../../Components/CustomComponents/safeView";
-import Colors from "../../../utils/Colors";
+import { StyleSheet, Text, View, Dimensions , ScrollView, TouchableOpacity} from 'react-native'
+import React from 'react'
+import ProfilePic from '../../Profile/profilePic';
+import SafeView from '../../../Components/CustomComponents/safeView';
+import Colors from '../../../utils/Colors';
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { Ionicons } from "@expo/vector-icons";
-import firebase from "firebase/compat";
-import { useNavigation } from "@react-navigation/native";
+import { useChatContext } from "stream-chat-expo";
+import { useNavigation } from '@react-navigation/native';
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
-const Profile = () => {
-  //   const dispatch = useDispatch();
-  //   const details = useSelector((state) => state.userDetails.details);
 
-  // const getMyObject = async () => {
-  //     const jsonValue = await AsyncStorage.getItem("@userDetails");
-  //     dispatch(setDetails(JSON.parse(jsonValue)));
-  //     console.log(details)
-  // };
-  const user = useSelector((state) => state.currentUser.CompaniesInformation);
-  const auth = getAuth();
+const JobApplicantProfile = ({ route }) => {
   const navigation = useNavigation();
+  const { item } = route.params;
+  const userId = item.userUniqueId;
+  const recruiterId = useSelector(
+    (state) => state.currentUser.JobRecruitersInformation.userUniqueId
+  );
+    const { client } = useChatContext();
+  console.log(recruiterId);
+    const CreateChannel = async () => {
+      const channel = client.channel("messaging", {
+        members: [userId, recruiterId],
+      });
+      await channel.watch();
+      navigation.navigate("ChattingScreen", { channel });
+    };
   return (
     <SafeView
       style={{
@@ -56,11 +53,9 @@ const Profile = () => {
           </Text>
           <View style={styles.ProfileContainer}>
             <View style={{ flexDirection: "row" }}>
-              <View style={styles.imageContainer}>
-                <Image source={{ uri: user.Logo }} style={styles.image} />
-              </View>
+              <ProfilePic user={item} />
               <View style={styles.textContainer}>
-                <Text style={styles.titleText}>{user.CompaniesLegalName}</Text>
+                <Text style={styles.titleText}>{item.ValidLastName}</Text>
                 <Text
                   style={{
                     fontSize: 16,
@@ -70,13 +65,12 @@ const Profile = () => {
                     paddingTop: 0,
                   }}
                 >
-                  {user.Industry}
+                  {item.userJobExpectedRole[1]}
                 </Text>
                 <Text
                   style={{
                     fontSize: 18,
                     paddingTop: 8,
-                    color: Colors.white,
                   }}
                 >
                   <Ionicons
@@ -84,7 +78,7 @@ const Profile = () => {
                     size={20}
                     color="white"
                   />
-                  {user.CompanyLocation}
+                  {item.ValidFirstName}
                 </Text>
               </View>
             </View>
@@ -117,7 +111,6 @@ const Profile = () => {
                 style={{
                   fontWeight: "300",
                   color: Colors.white,
-                  textAlign: "justify",
                 }}
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
@@ -129,14 +122,28 @@ const Profile = () => {
                 aspernatur aut consequatur.
               </Text>
             </ScrollView>
-            </View>
+          </View>
         </View>
       </ScrollView>
+      <TouchableOpacity
+        onPress={CreateChannel}
+        style={{
+          backgroundColor: Colors.white,
+          width: "90%",
+          height: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 40,
+          alignSelf: "center",
+          borderRadius: 20,
+        }}
+      >
+        <Text style={styles.button}>Chat</Text>
+      </TouchableOpacity>
     </SafeView>
   );
 };
-
-export default Profile;
+export default JobApplicantProfile
 
 const styles = StyleSheet.create({
   Container: {
@@ -160,15 +167,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: Colors.white,
   },
-  image: {
-    width: 130,
-    height: 170,
-    borderRadius: 20,
-  },
-  imageContainer: {
-    width: 130,
-    height: 170,
-    borderRadius: 20,
-    backgroundColor: Colors.white,
-  },
+  button: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.secondary,
+  }
 });

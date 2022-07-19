@@ -109,7 +109,6 @@ export default CompanyDetails
 
 const styles = StyleSheet.create({
   Container: {
-    paddingTop: "5%",
     justifyContent: "center",
     backgroundColor: Colors.primary,
     alignItems:"center"

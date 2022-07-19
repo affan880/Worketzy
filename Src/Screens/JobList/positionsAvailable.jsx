@@ -1,17 +1,27 @@
-import { StyleSheet, Text, View, Animated, FlatList, Dimensions, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  FlatList,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import React from "react";
 import Colors from "../../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "firebase/compat";
 import { useSelector } from "react-redux";
-import { UpdateViewCount } from "../../Functions/updateData"
+import { UpdateViewCount } from "../../Functions/updateData";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
-
-const PersonalisedJobList = ({ route }) => {
+const PositionsAvailable = ({ route }) => {
   const navigation = useNavigation();
   const { joblist } = route.params;
-  const userId = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
+  const userId = useSelector(
+    (state) => state.currentUser.JobSeekersInformation.userUniqueId
+  );
   return (
     <Animated.FlatList
       showsHorizontalScrollIndicator={false}
@@ -21,7 +31,7 @@ const PersonalisedJobList = ({ route }) => {
         paddingHorizontal: 0,
       }}
       data={joblist}
-      renderItem={({ item, index }) => {
+          renderItem={({ item, index }) => {
         return (
           <View key={Math.random()}>
             <Animated.View
@@ -110,9 +120,9 @@ const PersonalisedJobList = ({ route }) => {
       }}
     ></Animated.FlatList>
   );
-}
+};
 
-export default PersonalisedJobList
+export default PositionsAvailable;
 
 const styles = StyleSheet.create({
   posterImage: {

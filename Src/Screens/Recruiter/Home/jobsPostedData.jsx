@@ -6,9 +6,11 @@ import { getData } from "../../../Functions/getData";
 import Spinner from '../../../Components/CustomComponents/spinner';
 import Delete from '../../../Functions/deleteData';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const JobsPostedData = () => {
+    const navigation = useNavigation();
     const [jobsCreated, setJobsCreated] = useState(null);
     const [JobsData, setJobsData] = useState();
     const userId = useSelector((state) => state.currentUser.user.uid);
@@ -56,7 +58,7 @@ const JobsPostedData = () => {
                       : `${item.jobInfo.jobDescription.substring(0, 900)}`}
                   </Text>
                   <TouchableOpacity>
-                    <Text style={styles.moreBtn}>...Read more</Text>
+                    <Text style={styles.moreBtn}>Read more</Text>
                   </TouchableOpacity>
                   <View
                     style={{
@@ -85,7 +87,11 @@ const JobsPostedData = () => {
                           {item.jobInfo.peopleApplied.length}
                         </Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.openingsLeft}>
+                      <TouchableOpacity style={styles.openingsLeft}
+                        onPress={() => { 
+                           navigation.navigate("JobApplications");
+                        }}
+                      >
                         <View
                           style={{
                             flexDirection: "row",

@@ -10,6 +10,7 @@ export const currentUserDetailsSlice = createSlice({
     JobSeekersInformation: null,
     JobRecruitersInformation: null,
     CompaniesInformation: null,
+    userSignedIn: null,
   },
   reducers: {
     setUser: (state, action) => {
@@ -29,10 +30,14 @@ export const currentUserDetailsSlice = createSlice({
     },
     setCompaniesInformation: (state, action) => { 
       state.CompaniesInformation = action.payload;
+    },
+    setUserSignedIn: (state, action) => {
+      state.userSignedIn = action.payload;
     }
+
   }
 });
 
-export const { setUser, setUserImage, setCompanyLogo, setJobSeekersInformation, setCompaniesInformation, setJobRecruitersInformation } =
+export const { setUser, setUserImage, setCompanyLogo, setJobSeekersInformation, setCompaniesInformation, setJobRecruitersInformation, setUserSignedIn } =
   currentUserDetailsSlice.actions;
 export default currentUserDetailsSlice.reducer;

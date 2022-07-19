@@ -2,29 +2,24 @@ import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-nati
 import React from 'react'
 import { AntDesign } from "@expo/vector-icons";
 import Colors from '../../utils/Colors';
+import { useNavigation } from '@react-navigation/native';
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 const ActivitiesButtons = () => {
+  const navigation = useNavigation();
     return (
       <View style={styles.buttonContainer} >
-        <TouchableOpacity style={styles.buttons}>
-          <Text style={styles.ButtonText}>Edit Profile</Text>
+        <TouchableOpacity style={styles.buttons} onPress={() => {
+          navigation.navigate("Saved")
+        }} >
+          <Text style={styles.ButtonText}> Saved Jobs</Text>
           <AntDesign name="right" size={15} color={Colors.primary} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <Text style={styles.ButtonText}>Jobs Saved</Text>
-          <AntDesign name="right" size={15} color={Colors.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <Text style={styles.ButtonText}>Jobs Applied</Text>
-          <AntDesign name="right" size={15} color={Colors.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <Text style={styles.ButtonText}>Jobs Chats</Text>
-          <AntDesign name="right" size={15} color={Colors.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <Text style={styles.ButtonText}>Contact Us</Text>
+        <TouchableOpacity style={styles.buttons}
+          onPress={() => {
+          navigation.navigate("Chats")
+        }}  >
+          <Text style={styles.ButtonText}>Applied Jobs</Text>
           <AntDesign name="right" size={15} color={Colors.primary} />
         </TouchableOpacity>
       </View>
@@ -41,6 +36,9 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.07,
     alignItems: "center",
     paddingHorizontal: 20,
+    marginVertical: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 14,
   },
   ButtonText: {
     color: Colors.primary,
@@ -49,10 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
     buttonContainer: {
-        backgroundColor: Colors.secondary,
         width: screenWidth * 0.9,
         alignSelf: "center",
-        borderRadius: 14,
-        marginVertical: 15,
   }
 });

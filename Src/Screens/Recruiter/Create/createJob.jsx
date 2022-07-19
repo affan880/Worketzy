@@ -15,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 const CreateJob = () => {
   const navigation = useNavigation();
   const userId = useSelector((state) => state.currentUser.JobRecruitersInformation.userUniqueId);
+  const companiesInfo = useSelector((state) => state.currentUser.CompaniesInformation);
   const jobInfo = useSelector((state) => state.jobInfo.createJobInfo);
   const [JobTitles, setJobTitles] = useState(Titles);
   const [progress, setProgress] = useState(false);
@@ -98,7 +99,7 @@ const CreateJob = () => {
     } = values;
     const data = {
       recruiterId: userId,
-      jobsUniqueId: Math.round(Math.random() * 1000000000),
+      jobsUniqueId: Math.round(Math.random() * 10000000000),
       jobTitle: `${jobInfo.JobTitle}`,
       jobInfo: {
         image: `${jobInfo.ImageForBanner}`,
@@ -112,11 +113,16 @@ const CreateJob = () => {
         numberofViews: 0,
         points: 0,
         numberofPeopleRated: 0,
-        peopleApplied: {},
-        reviews: {
-          jobSeekerID: "",
-          jobSeekerName: "",
-        },
+        peopleApplied: [],
+        reviews: []
+      },
+      companiesInfo: {
+        LegalName: `${companiesInfo.CompaniesLegalName}`,
+        Description: `This is ${companiesInfo.CompaniesLegalName}`,
+        Location: `${companiesInfo.CompanyLocation}`,
+        Logo: `${companiesInfo.Logo}`,
+        Website: `${companiesInfo.CompanyWebsite}`,
+        Industry: `${companiesInfo.Industry}`,
       },
     };
     const url = "https://worketzy.herokuapp.com/api/jobs";

@@ -13,6 +13,8 @@ const Tabs = createBottomTabNavigator();
 export default () => {
   return (
     <Tabs.Navigator
+      backBehavior="initialRoute"
+      initialRouteName="Home"
       screenOptions={{
         tabBarHideOnKeyboard: "false",
         tabBarShowLabel: false,
@@ -63,7 +65,19 @@ export default () => {
               />
             </View>
           ),
-          headerShown: false,
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Saved",
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: "600",
+            color: Colors.white,
+          },
+          headerStyle: {
+            backgroundColor: Colors.secondaryShade,  
+            borderBottomWidth: 0,
+            elevation: 0,
+          }
         }}
       />
       <Tabs.Screen

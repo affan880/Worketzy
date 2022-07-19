@@ -11,7 +11,7 @@ import FourthPage from "../../Components/JobSeekerFormPages/fourthPage"
 import FormButton from "../../Components/forms/formButton";;
 import { useSelector, useDispatch } from "react-redux"
 import userDetails, { setUser, setDetails } from "../../redux/reducers/userDetails";
-import { setUserImage } from "../../redux/reducers/currentUser";
+import { setJobSeekersInformation, setUserImage } from "../../redux/reducers/currentUser";
 import uploadImage from "../../Components/firebase/authentication/UploadImage";
 import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import firebase from "firebase/compat";
@@ -20,7 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 const JobSeekerDetails = () => {
   const navigation = useNavigation();
   const ApplicationType = useSelector((state) => state.userDetails.ApplicationType);
-  const uid = useSelector((state) => state.recruiterDetails.recruiterStatus.id);
+  const uid = firebase.auth().currentUser.uid;
   const user = useSelector((state) => state.userDetails.user.status);
   const details = useSelector((state) => state.userDetails.details);
   const image = useSelector((state) => state.currentUser.userImage);
@@ -92,6 +92,7 @@ async function handleUserinfo(values) {
          userJobExpectedRole: details.userJobExpectedRole,
          userJobCategory: details.userJobCategory,
          userNextJobExpectations: details.userNextJobExpectations,
+         savedJobs :[],
          userUniqueId: uid
        };
        const uploaded = createUserDocument(user, uid, userDetails);
@@ -100,6 +101,13 @@ async function handleUserinfo(values) {
          photoURL: image,
          email : ValidEmail
        });
+       await AsyncStorage.setItem(
+         "@JobSeekersInformation",
+         JSON.stringify(userDetails)
+       ).then(() => {
+         console.log("Saved Details in the page JobSeekerDetails");
+       });
+       dispatch(setJobSeekersInformation(userDetails));
        dispatch(setDetails(userDetails));
         storeDetails(userDetails);
       uploaded
@@ -114,11 +122,6 @@ async function handleUserinfo(values) {
       console.log("error it is", error);
      }
      finally {
-       
-       await AsyncStorage.setItem("@JobSeekersInformation", JSON.stringify(userDetails)).then(() => { 
-         console.log("Saved Details in the page JobSeekerDetails");
-       })
-        dispatch(setJobSeekersInformation(userDetails));
       storeId({
         status: true,
          id: uid,

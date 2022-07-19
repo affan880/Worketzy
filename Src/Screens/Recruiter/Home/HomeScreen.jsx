@@ -28,6 +28,7 @@ const HomeScreen = () => {
   }, []);
 
   const LoadData = async () => {
+    console.log("LoadData");
             const userRef = await firebase
               .firestore()
               .collection("Recruiters")
@@ -45,6 +46,7 @@ const HomeScreen = () => {
             JSON.stringify(userData)
           ).then(() => {
             console.log("JobRecruitersInformation stored");
+            console.log(userData);
           });
           dispatch(setJobRecruitersInformation(userData))
           await AsyncStorage.setItem("@CompaniesInformation", JSON.stringify(CompanyData)).then(() => { 
@@ -65,7 +67,7 @@ const HomeScreen = () => {
       ) : jobsCreated === true ? (
         <JobsPostedData />
       ) : jobsCreated === false ? (
-        <PostAJobBtn />) : null
+        <PostAJobBtn Refresh = {LoadData} />) : null
       }
     </SafeView>
   );

@@ -5,6 +5,7 @@ import CompanyVerification from "../Components/JobRecruiterFormPage/companyVerif
 import VerificationByDocuments from "../Components/JobRecruiterFormPage/VerificationByDocuments";
 import VerificationBymail from "../Components/JobRecruiterFormPage/VerificationBymail";
 import RecruiterVerification from "../Components/JobRecruiterFormPage/recruiterVerification";
+import Colors from "../utils/Colors";
 const Stack = createNativeStackNavigator();
 
 export default function JobRecruiterFormStack() {

@@ -12,7 +12,7 @@ const screenHeight = Dimensions.get("window").height;
 
 const cardCarousel = () => {
   const [data, setData] = useState(null);
-  const userId = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
+  const userId = firebase.auth().currentUser.uid;
   const navigation = useNavigation();
   useEffect(() => {
     fetch("https://worketzy.herokuapp.com/api/jobs").then((response) => response.json())
@@ -26,12 +26,14 @@ const cardCarousel = () => {
   }, []);
   return (
       <SafeView style={styles.container} >
-          { data !== null ? ( <Animated.FlatList
+      {data !== null ? (
+        <Animated.FlatList
               showsHorizontalScrollIndicator={false}
               horizontal={true}
               snapToAlignment="start"
               contentContainerStyle={{
-                  paddingHorizontal: 0,
+                paddingHorizontal: 20,
+                marginTop: 20,
               }}
               data={data}
         renderItem={({ item, index }) => {
@@ -39,7 +41,7 @@ const cardCarousel = () => {
                     <View key={Math.random()}>
                       <Animated.View
                         style={{
-                          marginHorizontal: 20,
+                          marginLeft: index === 0 ? 0 : 20,
                           paddingLeft: 20,
                           borderRadius: 18,
                           backgroundColor: "#fff",
@@ -78,15 +80,28 @@ const cardCarousel = () => {
                           >
                             {item.jobTitle}
                           </Text>
+                          <Text
+                            style={{
+                              color: Colors.white,
+                              fontWeight: "300",
+                              fontSize:14,
+                              paddingBottom: 10,
+                            }}
+                          >
+                            {item.companiesInfo.LegalName}
+                          </Text>
 
                           <TouchableOpacity
                             style={{
-                              backgroundColor: Colors.primary,
+                              backgroundColor: Colors.textColorMain,
                               width: "80%",
-                              height: "40%",
-                              borderRadius: 18,
+                              height: "30%",
+                              borderRadius: 22,
                               marginTop: 20,
                               justifyContent: "center",
+                              alignSelf: "center",
+                              position: "absolute",
+                              bottom: 20,
                             }}
                             onPress={() => {
                               const data = {
@@ -122,8 +137,7 @@ const cardCarousel = () => {
                                 style={{
                                   alignSelf: "center",
                                   fontWeight: "700",
-                                  letterSpacing: 0.8,
-                                  color: Colors.white,
+                                  color: Colors.primary,
                                 }}
                               >
                                 Discover

@@ -4,10 +4,11 @@ import { ChannelList, Chat } from 'stream-chat-expo';
 import SafeView from '../CustomComponents/safeView';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux/es/exports';
+import firebase from 'firebase/compat';
 const ChannelsList = ({ userId }) => {
   const navigation = useNavigation();
-  const ChannelPressed = (channel) => {
-    navigation.navigate("ChattingScreen", { channel });
+  const ChannelPressed = (channel, userId) => {
+    navigation.navigate("ChattingScreen", { channel, userId });
   };
   const filters = {
     members: {
@@ -18,7 +19,7 @@ const ChannelsList = ({ userId }) => {
   return (
     <SafeView>
       <ChannelList
-        onSelect={(channel) => ChannelPressed(channel)}
+        onSelect={(channel) => ChannelPressed(channel, userId)}
         filters={filters}
       />
     </SafeView>

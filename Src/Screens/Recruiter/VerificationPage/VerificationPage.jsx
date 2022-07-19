@@ -12,7 +12,7 @@ const VerificationPage = () => {
     const dispatch = useDispatch()
     const [isVerified, setIsVerified] = useState(false)
   const CurrentUserID = useSelector((state) => state.currentUser.user);
-  const uid = useSelector((state) => state.currentUser.JobRecruitersInformation.userUniqueId);
+  const uid = firebase.auth().currentUser.uid;
     useEffect(() => { 
       LoadUser();
       verification();
@@ -26,14 +26,21 @@ const VerificationPage = () => {
         }
     }
     const verification = async () => { 
-       const userRef = firebase
-         .firestore()
-         .collection("Companies")
-         .doc(uid || CurrentUserID.uid);
-        const snapshot = await userRef.get();
-        const status = snapshot.data().Verified;
-        setIsVerified(status)
-        setVerified(status)
+      const userRef = firebase
+        .firestore()
+        .collection("Companies")
+        .doc(uid || CurrentUserID.uid).get().then(async (doc) => { 
+          if (doc.exists) {
+            const data = doc.data();
+            if (data.Verified) {
+              setIsVerified(true);
+              setVerified(true);
+            }
+            else {
+              setIsVerified(false);
+            }
+          }
+        })
     }
     const LoadUser = async () => {
         try {

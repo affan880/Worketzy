@@ -109,6 +109,11 @@ const JobRecruiterDetails = () => {
         recruiterDetails,
         companyDetails
       );
+          firebase.auth().currentUser.updateProfile({
+            displayName: `${CompaniesLegalName}`,
+            photoURL: CompaniesLogo,
+            email: ValidEmail,
+          });
       dispatch(setRecruiterDetails(recruiterDetails));
       storeDetails(recruiterDetails);
       uploaded
@@ -121,7 +126,7 @@ const JobRecruiterDetails = () => {
         : console.log("Data not uploaded");
           firebase.auth().currentUser.updateProfile({
             displayName: `${CompaniesLegalName}`,
-            photoURL: coImage,
+            photoURL: CompaniesLogo,
           });
     } catch (error) {
       console.log("error it is", error);
@@ -168,7 +173,7 @@ export default JobRecruiterDetails;
 
 const styles = StyleSheet.create({
   FormContainer: {
-    paddingTop: "7%",
+    paddingTop: "0%",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

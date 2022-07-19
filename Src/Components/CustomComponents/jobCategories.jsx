@@ -15,13 +15,12 @@ const JobCategories = () => {
   const [mostViewedJobsState, setMostViewedJobsState] = useState(false);
   const [mostAppliedJobs, setMostAppliedJobs] = useState();
   const [mostAppliedJobsState, setMostAppliedJobsState] = useState(false);
-
-  const CurrentUserID = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
+  const [CurrentUserID , setCurrentUserID] = useState(firebase.auth().currentUser.uid);
   const userExpectedRoles = async () => {
     const userRef = firebase
       .firestore()
       .collection("JobSeekers")
-      .doc(CurrentUserID);
+      .doc(CurrentUserID || firebase.auth().currentUser.uid);
     const snapshot = await userRef.get();
     const status = snapshot.data().userJobExpectedRole;
     setUserPreferedJobs(status);
@@ -40,13 +39,18 @@ const JobCategories = () => {
     : null;
  
   useEffect(() => {
+    CurrentUserID === null ? setCurrentUserID(firebase.auth().currentUser.uid) : null;
     getMostViewesJobs(setMostViewedJobs, setMostViewedJobsState);
     mostApplied(setMostAppliedJobs, setMostAppliedJobsState);
   }, [])
   
 
   return (
-    <View style={{ marginTop: 100, marginBottom: 200 }}>
+    <View style={{
+      width: "100%",
+      height: "100%",
+      marginBottom: 30,
+    }} >
       {mostAppliedJobsState ? (
         <View key={Math.random()}>
           <JobCardCarousel

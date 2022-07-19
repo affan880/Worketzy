@@ -1,5 +1,6 @@
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, SafeAreaView, StatusBar, Alert } from "react-native";
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import Constants from "expo-constants";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SafeView from "../../Components/CustomComponents/safeView";
@@ -15,18 +16,21 @@ import { Poppins_700Bold } from "@expo-google-fonts/poppins";
 import { setJobSeekersInformation } from "../../redux/reducers/currentUser";
 
 const screenWidth = Dimensions.get("window").width;
+const STATUSBAR_HEIGHT = Constants.statusBarHeight;
 const screenHeight = Dimensions.get("window").height;
  
 const Home = () => {
   const dispatch = useDispatch();
+  const [data, setData] = useState();
   const loadCurrentUser = async () => {
     const user = await AsyncStorage.getItem("@JobSeekersInformation");
     const data = JSON.parse(user);
+    setData(data);
     dispatch(setJobSeekersInformation(data));
   };
   useEffect(() => { 
     loadCurrentUser(); 
-  })
+  },[])
   const [loading, setLoading] = useState(false);  
     let [fontsLoaded, error] = useFonts({
         Raleway_400Regular_Italic,
@@ -38,14 +42,21 @@ const Home = () => {
         return null;
   }
   return (
-    <SafeView style={styles.container}> 
+    <SafeView style={styles.container}>
       <StatusBar translucent backgroundColor={Colors.secondaryShade} />
       {!loading ? (
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            marginBottom: 80,
+          }}
+        >
           <View style={styles.header}>
             <Text style={styles.headerText}>Home</Text>
             <View style={styles.intro}>
-              <Text style={styles.userName}>Hi, Affan</Text>
+              <Text style={styles.userName}>Hi, {
+                data ? data.ValidLastName : "User"
+              }</Text>
               <Text style={styles.welcomeText}>
                 Let's find the right job for you
               </Text>
@@ -61,7 +72,7 @@ const Home = () => {
             <TextInput
               style={styles.input}
               placeholder="Search a job"
-              onChangeText={() => { }}
+              onChangeText={() => {}}
               underlineColorAndroid="transparent"
             />
           </View>
@@ -71,8 +82,10 @@ const Home = () => {
           <View style={styles.jobCard}>
             <JobCategories />
           </View>
-        </ScrollView>) : <Spinner/>
-      }
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
     </SafeView>
   );
 };
@@ -84,16 +97,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondaryShade,
     width: screenWidth,
     height: screenHeight,
-    marginTop:15
+    marginTop: STATUSBAR_HEIGHT,
   },
   header: {
     width: 386,
     height: 40,
-    top: 35,
   },
   headerText: {
     height: 24,
-    top: 0,
     fontStyle: "normal",
     fontSize: 20,
     lineHeight: 24,
@@ -105,14 +116,10 @@ const styles = StyleSheet.create({
   intro: {
     width: 240,
     height: 57,
-    left: 14,
-    top: 10,
+    margin: 20,
   },
   userName: {
     height: 30,
-    left: "5%",
-    right: "17%",
-    top: "40%",
     fontStyle: "normal",
     fontSize: 17,
     lineHeight: 33,
@@ -122,26 +129,23 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     height: 20,
-    left: "5%",
-    right: "0.5%",
-    top: "45%",
     fontStyle: "normal",
     fontSize: 14,
     lineHeight: 21,
     letterSpacing: 1,
-    color: Colors.mediumGrey,
-    paddingLeft:0,
+    color: Colors.white,
+    paddingLeft: 0,
     fontFamily: "Raleway_400Regular_Italic",
   },
   searchSection: {
     width: screenWidth - 30,
-    left: 15,
-    top: 130,
+    height: 40,
+    marginTop: 90,
+    alignSelf: "center",
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    borderRadius: 18,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: "#EAEBEC",
   },
@@ -149,18 +153,21 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    flex: 1,
+    alignItems: "flex-start",
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
     paddingLeft: 0,
     backgroundColor: "#fff",
     color: "#424242",
-    borderRadius: 18,
+    borderRadius: 12,
   },
   Card: {
-    top: 150,
     width: screenWidth,
-    height: "20%",
+    height: "17%",
   },
+  jobCard: {
+    width: screenWidth,
+    height: "17%",
+  }
 });

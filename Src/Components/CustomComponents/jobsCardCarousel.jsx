@@ -19,7 +19,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 const cardCarousel = ({ name, joblist }) => {
   const navigation = useNavigation();
-  const userId = useSelector((state) => state.currentUser.JobSeekersInformation.userUniqueId);
+  const user = useSelector((state) => state.currentUser.JobSeekersInformation);
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
@@ -32,7 +32,11 @@ const cardCarousel = ({ name, joblist }) => {
         >
           {name}
         </Text>
-        <TouchableOpacity onPress={()=> navigation.navigate('PersonalisedJobList', {joblist})}  >
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("PersonalisedJobList", { joblist })
+          }
+        >
           <Text style={{ fontWeight: "400", color: Colors.white }}>
             See all
           </Text>
@@ -43,19 +47,21 @@ const cardCarousel = ({ name, joblist }) => {
         horizontal={true}
         snapToAlignment="start"
         data={joblist}
-        renderItem={({ item }) => {
+        contentContainerStyle={{
+          paddingHorizontal: 10,
+        }}
+        renderItem={({ item, index }) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("JobList", { item, userId });
+                navigation.navigate("JobList", { item, user });
               }}
             >
               <View
                 style={{
-                  marginHorizontal: 20,
+                  marginHorizontal: index === 0 ?10 : 10,
                   height: 300,
-                  width: 300,
-                  
+                  width: 280,
                 }}
               >
                 <View style={styles.jobCardImg}>
@@ -83,12 +89,17 @@ const cardCarousel = ({ name, joblist }) => {
 export default cardCarousel;
 
 const styles = StyleSheet.create({
+  container: {
+    width: screenWidth,
+    height: screenHeight * 0.4,
+  },
   headingContainer: {
     width: screenWidth,
-    height: 23,
+    height: 40,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingLeft: 22,
+    paddingRight:10,
   },
   image: {
     width: "100%",

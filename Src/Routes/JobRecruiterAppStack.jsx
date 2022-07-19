@@ -5,9 +5,9 @@ import Home from '../Screens/Recruiter/Home/HomeScreen'
 import CreateJob from '../Screens/Recruiter/Create/createJob'
 import ChatScreen from '../Screens/Recruiter/ChatScreen/chatScreen'
 import Profile from '../Screens/Recruiter/Profile/profileScreen'
-import Notifications from '../Screens/Recruiter/Notification/notifications'
+import JobApplications from '../Screens/Recruiter/JobApplications/jobApplications'
 import Colors from '../utils/Colors'
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons, Fontisto } from "@expo/vector-icons";
 const Tabs = createBottomTabNavigator();
 
 const CustomTabBarButton = ({ children, onPress }) => {
@@ -111,14 +111,14 @@ const JobRecruiterAppStack = () => {
         />
 
         <Tabs.Screen
-          name="Notifications"
-          component={Notifications}
+          name="JobApplications"
+          component={JobApplications}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
                 <MaterialIcons
-                  name="notifications"
-                  size={24}
+                  name="groups"
+                  size={28}
                   color="black"
                   style={{
                     color: focused ? Colors.secondary : Colors.secondaryShade,

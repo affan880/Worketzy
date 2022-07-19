@@ -29,7 +29,7 @@ export const getMostViewesJobs = (setMostViewedJobs, setMostViewedJobsState) => 
       const msg =
         'Cast to Number failed for value "kRNclBZYNDP65NqEQqpbOYqAJ3z2" (type string) at path "recruiterId" for model "Jobs"';
       if (responseJson.length === 0 || responseJson.message === msg) {
-        console.log(responseJson);
+        console.log("No Jobs");
       } else {
         const sorted = responseJson.sort(
           (a, b) => b.jobInfo.numberofViews - a.jobInfo.numberofViews
@@ -52,8 +52,8 @@ export const mostApplied = (setMostAppliedJobs, setMostAppliedJobsState) => {
     .then((responseJson) => {
       const msg =
         'Cast to Number failed for value "kRNclBZYNDP65NqEQqpbOYqAJ3z2" (type string) at path "recruiterId" for model "Jobs"';
-      if (responseJson.length === 0 || responseJson.message === msg) {
-        console.log(responseJson);
+      if (responseJson === null ||responseJson.length === 0 || responseJson.message === msg) {
+        console.log("No Jobs");
       } else {
         const sorted = responseJson.sort(
           (a, b) =>
@@ -72,6 +72,7 @@ export const mostApplied = (setMostAppliedJobs, setMostAppliedJobsState) => {
       console.error(error);
     });
 };
+
 export const recommendedJobs = (
   userPreferedJobs,
   userRecommendedJobs,
@@ -89,11 +90,11 @@ export const recommendedJobs = (
         const msg =
           'Cast to Number failed for value "kRNclBZYNDP65NqEQqpbOYqAJ3z2" (type string) at path "recruiterId" for model "Jobs"';
         if (responseJson.length === 0 || responseJson.message === msg) {
-          console.log(responseJson);
+          console.log("No data");
         } else {
           a.push(responseJson);
           const merge = [].concat(...a)
-          setUserRecommendedJobs(merge);
+          setUserRecommendedJobs(merge)
         }
       })
       .then(() => {
@@ -105,6 +106,59 @@ export const recommendedJobs = (
     });
   setUserRecommendedJobsState(true);
 };
+export const savedJobsData = (JobsData, setAllSavedJobs, setRefreshing) => {
+  let a = [];
+  JobsData.map((job, index) => {
+    const URL =
+      "https://worketzy.herokuapp.com/api/jobs/recruiter/" +
+      job.recruiterId +
+      "/" +
+      job.jobsUniqueId;
+    fetch(URL)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        const msg =
+          'Cast to Number failed for value "kRNclBZYNDP65NqEQqpbOYqAJ3z2" (type string) at path "recruiterId" for model "Jobs"';
+        if (responseJson.length === 0 || responseJson.message === msg) {
+          console.log(responseJson);
+        } else {
+          a.push(responseJson);
+          const merge = [].concat(...a);
+          setAllSavedJobs(merge);
+          setRefreshing(false);
+        }
+      })
+      .then(() => {
+        return true;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+  a.length = 0;
+};
+
+export const peopleApplied = (applications, setApplications, setIsLoading, setData) => {
+  console.log("here")
+  let a = [];
+  fetch("https://worketzy.herokuapp.com/api/jobs/b7OY7UZ8THfevRx1yd9FbfwnzQ53")
+    .then((response) => response.json())
+    .then((responseJson) => {
+      responseJson.map((res, index) => {
+        res.jobInfo.peopleApplied.map(
+          (user) => (
+            user.userId !== undefined
+              ? a.push({ id: user.userId, jobTitle: res.jobInfo.jobTitle })
+              : null,
+            setApplications([...new Set(a)]),
+            console.log(applications)
+          )
+        );
+      });
+    });
+  a.length = 0;
+}
+
 
 
 const styles = StyleSheet.create({})

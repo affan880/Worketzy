@@ -1,9 +1,14 @@
-import { View, Text,Button, StyleSheet, Dimensions } from 'react-native'
+import { View, Text,Button, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import SafeView from '../../Components/CustomComponents/safeView';
 import UserProfile from '../../Components/ProfileData/UserProfile';
 import Colors from '../../utils/Colors';
 import ActivitiesButtons from '../../Components/ProfileData/activitiesButtons';
+import ProfilePic from './profilePic';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuth } from 'firebase/auth';
+import { Ionicons } from "@expo/vector-icons";
+import { setUserSignedIn } from '../../redux/reducers/currentUser';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const Profile = () => {
@@ -15,89 +20,136 @@ const Profile = () => {
 //     dispatch(setDetails(JSON.parse(jsonValue)));
 //     console.log(details)
 // };
+  const user = useSelector((state) => state.currentUser.JobSeekersInformation);
+  const auth = getAuth();
   return (
-    <SafeView>
-      <View style={styles.container}>
-        <View styles={styles.activityContainer}>
-          <View style={styles.UserProfilePic}>
-            <UserProfile width={120} height={120} />
-          </View>
-          <View style={styles.activities}>
-            <View style={styles.activitiesContainers}>
-              <Text style={styles.activityTitleText}>0</Text>
-              <Text style={styles.activityTitle}>Jobs Applied</Text>
-            </View>
-            <View style={styles.activitiesContainers}>
-              <Text style={styles.activityTitleText}>0</Text>
-              <Text style={styles.activityTitle}>Jobs Saved</Text>
-            </View>
-            <View style={styles.activitiesContainers}>
-              <Text style={styles.activityTitleText}>0</Text>
-              <Text style={styles.activityTitle}>Jobs Chats</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.userBio}>
-          <Text style={styles.userBioText}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-            dicta facere omnis repellendus! Illum sapiente ipsa explicabo magnam
-            deserunt ea deleniti eos aperiam assumenda tempora!
+    <SafeView
+      style={{
+        flex: 1,
+        backgroundColor: Colors.secondaryShade,
+        width: screenWidth,
+        height: screenHeight,
+      }}
+    >
+      <ScrollView scrollEnabled={true}>
+        <View style={styles.Container}>
+          <Text
+            style={{
+              fontSize: 40,
+              fontWeight: "bold",
+              color: Colors.white,
+              marginTop: 80,
+              marginLeft: 20,
+              marginBottom: 50,
+              letterSpacing: 1,
+            }}
+          >
+            Profile
           </Text>
+          <View style={styles.ProfileContainer}>
+            <View style={{ flexDirection: "row" }}>
+              <ProfilePic user={user} />
+              <View style={styles.textContainer}>
+                <Text style={styles.titleText}>{user.ValidFirstName}</Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "500",
+                    letterSpacing: 0.5,
+                    color: Colors.white,
+                    paddingTop: 0,
+                  }}
+                >
+                  {user.userJobExpectedRole[0]}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    paddingTop: 8,
+                  }}
+                >
+                  <Ionicons
+                    name="ios-location-outline"
+                    size={20}
+                    color="white"
+                  />
+                  {user.userPreferedCity}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <Text
+            style={{
+              fontSize: 26,
+              fontWeight: "bold",
+              color: Colors.white,
+              marginLeft: 20,
+              letterSpacing: 1,
+              marginBottom: 0,
+            }}
+          >
+            About Me
+          </Text>
+          <View
+            style={{
+              width: "95%",
+              height: "20%",
+              borderRadius: 20,
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingTop: 10,
+              alignSelf: "flex-start",
+            }}
+          >
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text
+                style={{
+                  fontWeight: "300",
+                  color: Colors.white,
+                }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+                necessitatibus possimus sapiente ipsum hic, iure consequuntur
+                accusantium maxime aut neque harum nihil asperiores earum
+                laudantium sed at sit cupiditate voluptate itaque. Qui officia
+                veniam sapiente amet alias adipisci. Tempora, adipisci autem
+                praesentium placeat rerum officiis mollitia molestias explicabo
+                aspernatur aut consequatur.
+              </Text>
+            </ScrollView>
+          </View>
+          <View>
+            <ActivitiesButtons />
+          </View>
         </View>
-        <View style={styles.activitiesButtons}>
-        <ActivitiesButtons/> 
-        </View>
-      </View>
+      </ScrollView>
     </SafeView>
   );
 }
 
-
+      
 export default Profile 
-
+      
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.secondaryShade,
-    width: "100%",
-    height: "100%",
-  },
-  userBio: {
-    paddingHorizontal: screenWidth * 0.05,
-  },
-  userBioText: {
-    fontSize: screenWidth * 0.037,
-    fontWeight: "200",
-  },
-  activityContainer: {
+  Container: {
     width: screenWidth,
-    flexDirection: "row",
+    height: screenHeight,
+    backgroundColor: Colors.secondaryShade,
   },
-  activities: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+  ProfileContainer: {
+    width: screenWidth,
+    height: screenHeight * 0.25,
+    marginLeft: 20,
   },
-  activitiesContainers: {
-    flexDirection: "column",
-    alignItems: "center",
+  textContainer: {
     textAlign: "center",
-    paddingVertical: screenWidth * 0.05,
+    marginLeft: 20,
+    marginTop: 10,
+    width: screenWidth * 0.5,
   },
-  activityTitle: {
-    fontSize: screenWidth * 0.038,
-    fontWeight: "300",
-    letterSpacing: 1,
-  },
-  activityTitleText: {
-    fontSize: screenWidth * 0.042,
+  titleText: {
+    fontSize: 22,
     fontWeight: "600",
-    letterSpacing: 0.67,
+    color: Colors.white,
   },
-  UserProfilePic: {
-    marginTop: screenWidth * 0.1,
-  },
-  activitiesButtons: {
-    marginTop: screenWidth * 0.1,
-  }
 });
