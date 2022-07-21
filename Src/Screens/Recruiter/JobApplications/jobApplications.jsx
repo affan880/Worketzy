@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Animated } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import React,{useEffect, useState} from 'react'
 import Colors from '../../../utils/Colors'
 import Constants from 'expo-constants';
@@ -98,8 +98,9 @@ const JobApplications = () => {
         data={data}
         renderItem={({ item, index }) => {
           return (
+            <ScrollView>
             <View
-              style={{
+            style={{
                 backgroundColor: Colors.white,
                 width: width * 0.9,
                 height: height * 0.2,
@@ -107,15 +108,15 @@ const JobApplications = () => {
                 borderRadius: 15,
                 flexDirection: "row",
               }}
-            >
+              >
               <View
-                style={{
+              style={{
                   height: "100%",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Image
+              <Image
                   source={{
                     uri: item.userImage,
                   }}
@@ -125,8 +126,8 @@ const JobApplications = () => {
                     borderRadius: 100,
                     marginLeft: 25,
                   }}
-                />
-              </View>
+                  />
+                  </View>
 
               <View
                 style={{
@@ -134,29 +135,29 @@ const JobApplications = () => {
                   justifyContent: "space-evenly",
                 }}
               >
-                <Text
-                  style={{
-                    color: Colors.black,
+              <Text
+              style={{
+                color: Colors.black,
                     fontSize: 16,
                     fontWeight: "bold",
                     paddingBottom: 10,
                   }}
-                >
+                  >
                   {item.ValidFirstName + " " + item.ValidLastName}
-                </Text>
-                <Text
+                  </Text>
+                  <Text
                   style={{
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: "600",
                     paddingBottom: 10,
                   }}
-                >
+                  >
                   <Ionicons name="ios-location" size={18} color="#197380" />
                   {"  "}
                   Hyderabad
-                </Text>
-                <Text
+                  </Text>
+                  <Text
                   style={{
                     color: Colors.black,
                     fontSize: 14,
@@ -168,33 +169,34 @@ const JobApplications = () => {
                     name="shield-star"
                     size={18}
                     color="#197380"
-                  />
-                  {"  "}
-                  {titles[index]}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={{
-                  position: "absolute",
-                  right: 20,
-                  top: "50%",
-                  justifyContent: "space-evenly",
-                }}
+                    />
+                    {"  "}
+                    {titles[index]}
+                    </Text>
+                    </View>
+                    <TouchableOpacity
+                    style={{
+                      position: "absolute",
+                      right: 20,
+                      top: "50%",
+                      justifyContent: "space-evenly",
+                    }}
                 onPress={() => {
                   navigation.navigate("JobApplicant", { item });
                 }}
-              >
+                >
                 <Entypo name="eye" size={24} color="#197380" />
-              </TouchableOpacity>
-            </View>
+                </TouchableOpacity>
+                </View>
+                </ScrollView>
           );
         }}
-      >
-            </Animated.FlatList>
-            </View>
-            );
-          }
-          
-          export default JobApplications
-          
-          const styles = StyleSheet.create({})
+        >
+        </Animated.FlatList>
+        </View>
+        );
+      }
+      
+      export default JobApplications
+      
+      const styles = StyleSheet.create({})
