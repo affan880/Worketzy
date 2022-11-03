@@ -1,6 +1,6 @@
 # Worketzy
 
-## Images
+### Screenshots
 ![](Screenshots/0.png)  
 ![](Screenshots/1.png) 
 ![](Screenshots/2.png)
